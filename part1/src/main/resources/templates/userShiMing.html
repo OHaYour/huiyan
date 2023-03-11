@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Themezhub">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HuiYan-实名认证</title>
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/styles_user.css}" rel="stylesheet">
+    <link th:href="@{/css/style_reg.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/snackbar.min.css}" rel="stylesheet">
+    <link th:href="@{/css/slick.css}" rel="stylesheet">
+    <link th:href="@{/css/slick-theme.css}" rel="stylesheet">
+    <link th:href="@{/css/themify.css}" rel="stylesheet">
+    <link th:href="@{/css/line-icons.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/flaticon.css}" rel="stylesheet">
+
+    <link th:href="@{/css/iconfont.css}" rel="stylesheet">
+
+    <script type="text/javascript">
+        function showEmail() {
+            //点击按钮实现部分控件的隐藏显示
+            $("#userEmail").css({'display':'none'});
+            $("#updateEmail").css({'display':'block'});
+            $("#showBtn").css({'display':'none'});
+
+        }
+
+        function getRealInfo() {
+
+            var userRealName=$("#userRealName").val();
+            var userRealId=$("#userRealId").val();
+            var userEmail=$("#updateEmail").val();
+            var vCode=$("#vCode").val();
+
+            // var user={
+            //     "userRealName":$("#userRealName").val(),
+            //     "userRealId":$("#userRealId").val(),
+            //     "userEmail":$("#updateEmail").val(),
+            //     "vCode":$("#vCode").val()
+            // };
+            //
+            // //ajax 单个对象传值
+            // $.ajax({
+            //     url:"/user/addUserRealInfo",
+            //     type:"Post",
+            //     dataType : "JSON",
+            //     contentType:"application/json",
+            //     data:JSON.stringify(user),
+            //     success:function(msg){
+            //         // if(msg=='ok'){
+            //         //     // location.href="/video/toVideo";
+            //         // }else{
+            //         //     alert("用户名或验证码有误！")
+            //         //     // location.href="/user/toRegister1";
+            //         // }
+            //         alert("gegegegegegege")
+            //     }
+            // })
+
+            $.ajax({
+                url:"/user/addUserRealInfo",
+                type:"post",
+                data:{'userRealName':userRealName,'userRealId':userRealId,'userEmail':userEmail,'vCode':vCode},
+                success:function(msg){
+                    if(msg=='reg_error'){
+                        alert("用户信息已被注册！")
+                        location.href="/user/toUserShiMing";
+                    }else if(msg=='vCode_error'){
+                        alert("验证码错误！")
+                        location.href="/user/toUserShiMing";
+                    }else if (msg=='shiming_ok'){
+                        alert("实名录入成功！")
+                        location.href="/user/toUserIndex";
+                    }
+
+                }
+            })
+        }
+
+        function getVCode() {
+            var email=$("#updateEmail").val();
+
+            $.ajax({
+                url:"/user/sendVCode",
+                type:"post",
+                data:"email=" + email,
+                success:function(msg){
+                    alert("验证码已发送")
+
+                }
+            })
+
+        }
+    </script>
+
+</head>
+
+<body>
+
+
+    <div id="main-wrapper">
+
+
+        <div class="header header-light dark-text head-shadow">
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <div class="container" th:insert="~{/commons/common_user::topBar1}"></div>
+
+        </div>
+
+        <div class="dashboard-wrap bg-light">
+
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <div class="collapse" id="MobNav" th:insert="~{/commons/common_user::topBar2}"></div>
+
+
+            <div class="dashboard-content">
+                <div class="dashboard-tlbar d-block mb-5">
+                    <div class="row">
+                        <div class="colxl-12 col-lg-12 col-md-12">
+                            <!-- <h1 class="ft-medium">修改密码</h1> -->
+                          <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item text-muted"><a href="#">个人中心</a></li>
+                                    <!-- <li class="breadcrumb-item text-muted"><a href="#">Dashboard</a></li> -->
+                                    <li class="breadcrumb-item"><a href="#" class="theme-cl">实名认证</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widg-bar d-block">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="_dashboard_content bg-white rounded mb-4">
+                               <div class="_dashboard_content_header br-bottom py-3 px-3">
+                                    <div class="_dashboard__header_flex">
+                                        <h4 class="mb-0 ft-medium fs-md">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-biaotou-daoxu"></use>
+                                            </svg>
+                                            填写信息</h4>
+                                    </div>
+                                </div>
+
+                                <div class="_dashboard_content_body py-3 px-3">
+
+                                    <form class="row">
+
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">真实姓名</label>
+                                                <input type="text" class="form-control rounded" id="userRealName">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">证号号码</label>
+                                                <input type="text" class="form-control rounded" id="userRealId">
+                                            </div>
+                                        </div>
+
+										<div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+
+                                                <div class="_dashboard_content_header br-bottom py-3 px-3">
+                                                    <div class="_dashboard__header_flex">
+                                                        <h4 class="mb-0 ft-medium fs-md">
+                                                            <svg class="icon" aria-hidden="true">
+                                                                <use xlink:href="#icon-biaotou-daoxu"></use>
+                                                            </svg>
+                                                            验证邮箱</h4>
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div style="float: left">
+                                                    <h2 style="display:block" th:text="${session.loginUser.getUserEmail()}" id="userEmail"></h2>
+                                                </div>
+                                                <div style="float: left">
+                                                    <input type="text" style="display:none;width: 800px" class="form-control rounded" id="updateEmail">
+                                                </div>
+                                                <div style="float: right">
+												    <button type="button" class="btn btn-md ft-medium text-light rounded theme-bg" style="width: 200px" onclick="showEmail()" id="showBtn">修改</button>
+                                                </div>
+                                            </div>
+
+											 <br /><br />
+
+
+
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">邮箱验证码</label>
+
+                                                <div>
+                                                    <div style="float: left">
+                                                        <input type="text" class="form-control rounded" style="width: 800px" id="vCode">
+                                                    </div>
+                                                    <div style="float: right">
+												        <button type="button" class="btn btn-md ft-medium text-light rounded theme-bg" style="width: 200px" onclick="getVCode()">点击获取</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <br/>
+
+                                        <div class="col-xl-12 col-lg-12">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-md ft-medium text-light rounded theme-bg" onclick="getRealInfo()">保存</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- footer -->
+                <div class="row">
+                    <div class="col-md-12">
+<!--                        <div class="py-3"> 2022 Workplex. Designd By <a href="http://www.sucai8.cn">sucai8.cn</a>.</div>-->
+                        <p>Copyright (c) 2022 HuiYan All Rights By HuiYan.cn.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/slick.js}"></script>
+    <script th:src="@{/js/slider-bg.js}"></script>
+    <script th:src="@{/js/smoothproducts.js}"></script>
+    <script th:src="@{/js/snackbar.min.js}"></script>
+    <script th:src="@{/js/jQuery.style.switcher.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+
+    <script th:src="@{/js/iconfont.js}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+	  xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>HuiYan-视频详情</title>
+
+
+	<link rel="stylesheet" th:href='@{/css/css.css}'>
+	<link rel="stylesheet" th:href='@{/css/default.css}'>
+	<link rel="stylesheet" th:href='@{/css/plugins.css}'>
+	<link rel="stylesheet" th:href='@{/css/style_video.css}'>
+	<link rel="stylesheet" th:href='@{/css/color.css}'>
+
+	<link rel="stylesheet" th:href="@{/css/iconfont.css}">
+
+	<!-- jQuery (Bootstrap 插件需要引入) -->
+	<!-- <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+	<!-- 包含了所有编译插件 -->
+	<!-- <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+	<link id="template-color" rel="stylesheet" th:href='@{/css/color.css}'>
+
+	<link rel="stylesheet" th:href="@{/css/style_comment.css}">
+	<link rel="stylesheet" th:href="@{/css/comment.css}">
+
+	<script>
+		function playVideo(obj) {
+			//获取到视频的id
+			var videoId=$(obj).prev().val();
+
+			// alert(videoId)
+			$.ajax({
+				url: "/video/setToVideo",
+				type: "post",
+				data: "videoId=" + videoId,
+				success:function(msg){
+					if(msg=='ok'){
+						location.href="/video/toVideo";
+					}else{
+						alert("视频播放出错！")
+						location.href="/video/loadVideoImg";
+					}
+				}
+			})
+
+		}
+
+		function changeLike() {
+
+			var videoLike=$("#videoLike").val();
+			var likeAmount=$("#likeAmount").val();
+
+			$.ajax({
+				url:"/video/changeVideoLike",
+				type:"post",
+				data:{'videoLike':videoLike,'likeAmount':likeAmount},
+				success:function(msg){
+					if(msg=='ok'){
+						location.href="/video/toVideo";
+					}else{
+						alert("用户名或验证码有误！")
+						location.href="/user/toRegister1";
+					}
+				}
+			})
+		}
+
+		function addCoin() {
+			var videoCoin=$("#videoCoin").val();
+			var coinAmount=$("#coinAmount").val();
+			var res=confirm("确定花费1枚Y币进行投币？")
+			if(res) {
+				$.ajax({
+					url: "/video/changeVideoCoin",
+					type: "post",
+					data: {'videoCoin': videoCoin, 'coinAmount': coinAmount},
+					success: function (msg) {
+						if (msg == 'ok') {
+							location.href = "/video/toVideo";
+						} else if(msg=='balanceLow'){
+							var res=confirm("余额不足，是否前往充值？")
+							if (res){
+								location.href="/user/toUserQianBao"
+							}
+						}
+					}
+				})
+			}
+		}
+
+		function changeCollection() {
+
+			var videoCollection=$("#videoCollection").val();
+			var collectionAmount=$("#collectionAmount").val();
+
+			$.ajax({
+				url:"/video/changeVideoCollection",
+				type:"post",
+				data:{'videoCollection':videoCollection,'collectionAmount':collectionAmount},
+				success:function(msg){
+					if(msg=='ok'){
+						location.href="/video/toVideo";
+					}else{
+						alert("用户名或验证码有误！")
+						location.href="/user/toRegister1";
+					}
+				}
+			})
+		}
+
+		function toUserIndex() {
+			location.href="/user/toUserIndex";
+		}
+	</script>
+
+
+</head>
+<body class="single-video">
+<div id="preloader">
+	<div class="spinner">
+		<div class="uil-ripple-css">
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+</div>
+
+<!--TopBarStart!!!-->
+<div th:insert="~{/commons/common_video::topBar1}"></div>
+<div th:insert="~{/commons/common_video::topBar2}"></div>
+<div th:insert="~{/commons/common_video::topBar3}"></div>
+<!--TopBarEnd!!!!-->
+
+<div class="container-fluid p-0">
+	<div class="d-flex topspace-90">
+
+		<!--SideBarStart!!!-->
+		<div th:insert="~{/commons/common_video::sideBar}"></div>
+		<!--SideBarEnd!!!-->
+
+		<div class="main-container">
+			<section class="bg-gray pt-4 pr-15 pl-15">
+				<div class="container-fluid">
+					<div class="row">
+
+						<div class="col-xl-8 col-md-7">
+
+							<div class="video-item-card">
+								<div class="video-thumb">
+
+<!--									<video class="viewtube-player" preload="none" playsinline="" th:each="v:${vp}" th:data-poster="@{/img/20220323205058_test2.jpg}" controls="" style="height: 500px">-->
+									<video class="viewtube-player" preload="none" playsinline="" th:data-poster="${session.videoPlay.getImgPath()}" controls="" >
+
+
+										<!-- 	<source src="https://www.dropbox.com/s/59i5dp1vstfvtz9/Flight-Simulator-2020...-we-are-in-a-new-Crysis-Era-.mp4?dl=1"
+                                             type="video/mp4">
+                                            <source src="https://www.dropbox.com/s/59i5dp1vstfvtz9/Flight-Simulator-2020...-we-are-in-a-new-Crysis-Era-.mp4?dl=1"
+                                             type="video/webm"> -->
+
+<!--										<source th:src="@{/video/20220323205058_test2.mp4}" type="video/mp4">-->
+										<source th:src="${session.videoPlay.getVideoPath()}" type="video/mp4">
+
+<!--										<source th:src="@{/video/20220323204127_test1.ogg}" type="video/ogg">-->
+<!--										<source th:src="@{/video/20220323204127_test1.webm}" type="video/webm">-->
+									</video>
+<!--									<h2 th:text="${session.imgName}"></h2>-->
+<!--									<h2 th:text="${session.videoName}"></h2>-->
+
+<!--									<div th:each="v:${vp}">-->
+<!--										<h2 th:text="${v.imgPath}"></h2>-->
+<!--										<h2 th:text="${v.videoPath}"></h2>-->
+<!--									</div>-->
+
+<!--									<video width="320" height="240" controls>-->
+<!--										<source src="/video/20220323204127_test1.mp4" type="video/mp4">-->
+<!--										<source src="/video/20220323204127_test1.ogg" type="video/ogg">-->
+<!--										您的浏览器不支持 HTML5 video 标签。-->
+<!--									</video>-->
+
+								</div>
+
+							</div>
+
+
+
+							<!-- 视频信息及分享 -->
+							<div class="container-fluid">
+								<div class="row mt-15 mb-15">
+									<div class="col-sm-6 my-auto">
+
+										<div class="video-like">
+											<a href="#" title="Like" class="mr-4 like-button" data-id="57" onclick="changeLike()">
+<!--												<svg class="icon" aria-hidden="true">-->
+<!--													<use xlink:href="#icon-dianzan3" ></use>-->
+<!--												</svg>-->
+
+												<input type="hidden" th:value="${session.videoAppend.getVideoLike()}" id="videoLike">
+												<input type="hidden" th:value="${session.videoPlay.getVideoLike()}" id="likeAmount">
+												<span th:if="${session.videoAppend.getVideoLike()=='0'}">
+												<svg t="1651971171731" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2488" width="200" height="200"><path d="M542.6688 85.333333c-74.325333 0-133.307733 58.026667-133.307733 133.393067 0 43.861333-37.922133 113.578667-80.093867 148.4288-30.754133 25.412267-98.013867 45.226667-200.055467 56.661333l-3.413333 0.4608a68.266667 68.266667 0 0 0-57.258667 67.328l-0.238933 374.442667-0.0512 0.256c-0.170667 1.194667-0.1024 2.269867 0.017067 3.822933l0.085333 3.413334a68.2496 68.2496 0 0 0 68.1984 64.853333l612.096 0.136533 0.341333 0.0512c0.836267 0.0512 1.6896 0.085333 2.542934 0.085334 25.463467 0 50.568533-7.168 72.430933-21.026134l4.693333-3.072a133.205333 133.205333 0 0 0 40.772267-45.2096l1.604267-3.072-1.6384 2.5088c4.642133-6.5024 8.021333-13.824 10.103466-21.6064l74.069334-326.894933 0.768-3.242667c0.9216-4.488533 1.365333-9.557333 1.2288-14.728533l-0.068267-1.092267-0.119467 2.474667a132.949333 132.949333 0 0 0-20.206933-81.271467l-2.6112-4.061866c-23.125333-34.577067-61.013333-56.081067-102.2976-59.204267l-2.679467-0.170667-1.024-0.136533a61.969067 61.969067 0 0 0-7.560533-0.4608l-145.442133-0.1024 1.8432-8.8576a393.728 393.728 0 0 0 7.185066-75.025067c0-28.501333-3.242667-56.951467-9.472-85.333333l-0.699733-2.696533a34.116267 34.116267 0 0 0-0.9216-2.628267l-0.477867-1.041067-0.682666-2.4576A133.4272 133.4272 0 0 0 542.6688 85.333333z m0 68.266667a65.160533 65.160533 0 0 1 62.5664 47.274667l1.553067 5.922133 0.6144 1.672533-0.955734-4.727466a323.703467 323.703467 0 0 1-10.120533 177.425066l-0.750933 2.389334a34.133333 34.133333 0 0 0 32.938666 42.973866L818.670933 426.666667l1.604267 0.238933 2.423467 0.187733a66.986667 66.986667 0 0 1 54.6304 31.573334 64.853333 64.853333 0 0 1 10.154666 35.84l-0.273066 6.877866 0.1024 2.525867-73.796267 325.700267-1.1264 1.7408-1.245867 2.269866a65.314133 65.314133 0 0 1-23.552 26.2656l-3.720533 2.2016a66.833067 66.833067 0 0 1-28.125867 8.192l-2.133333 0.0512-2.048-0.068266L136.533333 870.126933l0.256-378.4704c114.210133-12.782933 192.273067-35.7888 235.946667-71.867733 55.415467-45.806933 102.3488-130.594133 104.789333-195.822933l0.085334-5.239467c0-37.410133 28.16-65.1264 65.041066-65.1264z" fill="#707070" p-id="2489"></path><path d="M290.133333 580.266667v187.733333a34.133333 34.133333 0 0 1-34.133333 34.133333h-34.133333V546.133333h34.133333a34.133333 34.133333 0 0 1 34.133333 34.133334z" fill="#707070" p-id="2490"></path></svg>
+												</span>
+												<span th:if="${session.videoAppend.getVideoLike()=='1'}">
+												<svg t="1651971249479" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2908" width="200" height="200"><path d="M542.6688 85.333333c-74.325333 0-133.307733 58.026667-133.307733 133.393067 0 43.861333-37.922133 113.578667-80.093867 148.4288-30.754133 25.412267-98.013867 45.226667-200.055467 56.661333l-3.413333 0.4608a68.266667 68.266667 0 0 0-57.258667 67.328l-0.238933 374.442667-0.0512 0.256c-0.170667 1.194667-0.1024 2.269867 0.017067 3.822933l0.085333 3.413334a68.2496 68.2496 0 0 0 68.1984 64.853333l612.096 0.136533 0.341333 0.0512c0.836267 0.0512 1.6896 0.085333 2.542934 0.085334 25.463467 0 50.568533-7.168 72.430933-21.026134l4.693333-3.072a133.205333 133.205333 0 0 0 40.772267-45.2096l1.604267-3.072-1.6384 2.5088c4.642133-6.5024 8.021333-13.824 10.103466-21.6064l74.069334-326.894933 0.768-3.242667c0.9216-4.488533 1.365333-9.557333 1.2288-14.728533l-0.068267-1.092267-0.119467 2.474667a132.949333 132.949333 0 0 0-20.206933-81.271467l-2.6112-4.061866c-23.125333-34.577067-61.013333-56.081067-102.2976-59.204267l-2.679467-0.170667-1.024-0.136533a61.969067 61.969067 0 0 0-7.560533-0.4608l-145.442133-0.1024 1.8432-8.8576a393.728 393.728 0 0 0 7.185066-75.025067c0-28.501333-3.242667-56.951467-9.472-85.333333l-0.699733-2.696533a34.116267 34.116267 0 0 0-0.9216-2.628267l-0.477867-1.041067-0.682666-2.4576A133.4272 133.4272 0 0 0 542.6688 85.333333z m0 68.266667a65.160533 65.160533 0 0 1 62.5664 47.274667l1.553067 5.922133 0.6144 1.672533-0.955734-4.727466a323.703467 323.703467 0 0 1-10.120533 177.425066l-0.750933 2.389334a34.133333 34.133333 0 0 0 32.938666 42.973866L818.670933 426.666667l1.604267 0.238933 2.423467 0.187733a66.986667 66.986667 0 0 1 54.6304 31.573334 64.853333 64.853333 0 0 1 10.154666 35.84l-0.273066 6.877866 0.1024 2.525867-73.796267 325.700267-1.1264 1.7408-1.245867 2.269866a65.314133 65.314133 0 0 1-23.552 26.2656l-3.720533 2.2016a66.833067 66.833067 0 0 1-28.125867 8.192l-2.133333 0.0512-2.048-0.068266L136.533333 870.126933l0.256-378.4704c114.210133-12.782933 192.273067-35.7888 235.946667-71.867733 55.415467-45.806933 102.3488-130.594133 104.789333-195.822933l0.085334-5.239467c0-37.410133 28.16-65.1264 65.041066-65.1264z" fill="#d4237a" p-id="2909"></path><path d="M290.133333 580.266667v187.733333a34.133333 34.133333 0 0 1-34.133333 34.133333h-34.133333V546.133333h34.133333a34.133333 34.133333 0 0 1 34.133333 34.133334z" fill="#d4237a" p-id="2910"></path></svg>
+												</span>
+												<span th:text="${session.videoPlay.getVideoLike()}"></span>
+											</a>
+											<a href="#" title="Dislike" class="mr-4 dislike-button" data-id="57" onclick="addCoin()">
+<!--												<svg class="icon" aria-hidden="true">-->
+<!--													<use xlink:href="#icon-jinbi"></use>-->
+<!--												</svg>-->
+
+												<input type="hidden" th:value="${session.videoAppend.getVideoCoin()}" id="videoCoin">
+												<input type="hidden" th:value="${session.videoPlay.getVideoCoin()}" id="coinAmount">
+												<span th:if="${session.videoAppend.getVideoCoin()=='0'}">
+												<svg t="1651971368919" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6017" width="200" height="200"><path d="M510.3616 973.4656c-252.416 0-457.7792-205.3632-457.7792-457.7792s205.3632-457.7792 457.7792-457.7792 457.7792 205.3632 457.7792 457.7792-205.3632 457.7792-457.7792 457.7792z m0-854.1184c-218.5216 0-396.3392 177.7664-396.3392 396.3392S291.84 912.0256 510.3616 912.0256s396.3392-177.7664 396.3392-396.3392-177.8176-396.3392-396.3392-396.3392z" fill="#8a8a8a" p-id="6018"></path><path d="M655.6672 585.216h-116.6336v-49.9712h116.6336c16.9472 0 30.72-13.7728 30.72-30.72s-13.7728-30.72-30.72-30.72h-80.3328l102.3488-104.96c11.8272-12.1344 11.6224-31.5904-0.5632-43.4176-12.1344-11.8272-31.5904-11.6224-43.4176 0.5632L508.3136 454.5536 382.9248 325.9392a30.72 30.72 0 0 0-43.4176-0.5632 30.72 30.72 0 0 0-0.5632 43.4176l102.3488 104.96H360.96c-16.9472 0-30.72 13.7728-30.72 30.72s13.7728 30.72 30.72 30.72h116.6336v49.9712H360.96c-16.9472 0-30.72 13.7728-30.72 30.72s13.7728 30.72 30.72 30.72h116.6336v84.6336c0 16.9472 13.7728 30.72 30.72 30.72s30.72-13.7728 30.72-30.72V646.656h116.6336c16.9472 0 30.72-13.7728 30.72-30.72s-13.7728-30.72-30.72-30.72z" fill="#8a8a8a" p-id="6019"></path></svg>
+												</span>
+												<span th:if="${session.videoAppend.getVideoCoin()=='1'}">
+													<svg t="1651971368919" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6017" width="200" height="200"><path d="M510.3616 973.4656c-252.416 0-457.7792-205.3632-457.7792-457.7792s205.3632-457.7792 457.7792-457.7792 457.7792 205.3632 457.7792 457.7792-205.3632 457.7792-457.7792 457.7792z m0-854.1184c-218.5216 0-396.3392 177.7664-396.3392 396.3392S291.84 912.0256 510.3616 912.0256s396.3392-177.7664 396.3392-396.3392-177.8176-396.3392-396.3392-396.3392z" fill="#d4237a" p-id="6018"></path><path d="M655.6672 585.216h-116.6336v-49.9712h116.6336c16.9472 0 30.72-13.7728 30.72-30.72s-13.7728-30.72-30.72-30.72h-80.3328l102.3488-104.96c11.8272-12.1344 11.6224-31.5904-0.5632-43.4176-12.1344-11.8272-31.5904-11.6224-43.4176 0.5632L508.3136 454.5536 382.9248 325.9392a30.72 30.72 0 0 0-43.4176-0.5632 30.72 30.72 0 0 0-0.5632 43.4176l102.3488 104.96H360.96c-16.9472 0-30.72 13.7728-30.72 30.72s13.7728 30.72 30.72 30.72h116.6336v49.9712H360.96c-16.9472 0-30.72 13.7728-30.72 30.72s13.7728 30.72 30.72 30.72h116.6336v84.6336c0 16.9472 13.7728 30.72 30.72 30.72s30.72-13.7728 30.72-30.72V646.656h116.6336c16.9472 0 30.72-13.7728 30.72-30.72s-13.7728-30.72-30.72-30.72z" fill="#d4237a" p-id="6019"></path></svg>
+												</span>
+													<span th:text="${session.videoPlay.getVideoCoin()}"></span>
+											</a>
+											<a href="#" title="Dislike" class="mr-4 dislike-button" data-id="57" onclick="changeCollection()">
+<!--												<svg class="icon" aria-hidden="true" >-->
+<!--													<use xlink:href="#icon-shoucang1"></use>-->
+<!--												</svg>-->
+												<input type="hidden" th:value="${session.videoAppend.getVideoCollection()}" id="videoCollection">
+												<input type="hidden" th:value="${session.videoPlay.getVideoCollection()}" id="collectionAmount">
+												<span th:if="${session.videoAppend.getVideoCollection()=='0'}">
+												<svg t="1651971455800" class="icon" viewBox="0 0 1026 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7999" width="200" height="200"><path d="M1019.109859 384c-11.286261-32.01113-39.713391-55.05113-74.195478-60.126609L701.69212 288.233739l-105.627826-216.019478c-15.270957-31.276522-48.261565-51.489391-84.057043-51.489391-35.706435 0-68.652522 20.21287-83.968 51.489391l-105.672348 216.041739L79.166902 323.940174c-34.504348 4.964174-62.953739 27.981913-74.24 60.17113-11.264 32.50087-2.871652 67.806609 21.882435 92.137739l178.509913 175.638261-41.405217 243.378087c-5.810087 33.925565 9.282783 68.719304 38.555826 88.687304 28.627478 19.255652 67.005217 21.370435 97.836522 5.164522l211.745391-112.39513 211.878957 112.417391c13.712696 7.234783 29.094957 11.063652 44.521739 11.063652 19.010783 0 37.420522-5.609739 53.337043-16.317217 29.139478-19.878957 44.210087-54.650435 38.4-88.576l-41.382957-243.400348 178.532174-175.638261C1022.048294 451.917913 1030.440641 416.589913 1019.109859 384zM966.062207 444.527304l-195.094261 191.955478 45.278609 266.329043c2.938435 17.096348-4.585739 34.05913-19.478261 44.232348-15.248696 10.24-35.817739 11.330783-52.045913 2.782609L512.00725 826.323478l-232.537043 123.436522c-16.406261 8.637217-36.997565 7.479652-52.045913-2.671304-15.048348-10.262261-22.572522-27.247304-19.634087-44.343652l45.30087-266.284522-195.072-191.955478c-12.377043-12.154435-16.606609-29.718261-11.063652-45.723826 5.765565-16.384 20.524522-28.182261 38.622609-30.786783l266.48487-39.112348 115.97913-237.122783c7.880348-16.11687 25.154783-26.534957 43.987478-26.534957 18.899478 0 36.173913 10.395826 44.054261 26.512696l115.95687 237.122783 266.418087 39.023304c18.075826 2.671304 32.901565 14.514087 38.64487 30.809043C982.668815 414.786783 978.43925 432.328348 966.062207 444.527304zM509.046555 376.898783c-45.590261 0-82.320696 13.913043-109.122783 41.316174-44.744348 45.746087-43.78713 112.194783-43.720348 115.021913 0.26713 12.109913 10.173217 21.726609 22.238609 21.726609 0.133565 0 0.289391 0 0.422957 0 12.265739-0.222609 22.016-10.373565 21.837913-22.639304 0-0.512-0.400696-51.066435 31.254261-83.18887 18.098087-18.387478 44.054261-27.692522 77.06713-27.692522 12.288 0 22.26087-9.97287 22.26087-22.26087S521.334555 376.898783 509.046555 376.898783z" p-id="8000" fill="#8a8a8a"></path></svg>
+												</span>
+												<span th:if="${session.videoAppend.getVideoCollection()=='1'}">
+												<svg t="1651971477347" class="icon" viewBox="0 0 1026 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8566" width="200" height="200"><path d="M1019.109859 384c-11.286261-32.01113-39.713391-55.05113-74.195478-60.126609L701.69212 288.233739l-105.627826-216.019478c-15.270957-31.276522-48.261565-51.489391-84.057043-51.489391-35.706435 0-68.652522 20.21287-83.968 51.489391l-105.672348 216.041739L79.166902 323.940174c-34.504348 4.964174-62.953739 27.981913-74.24 60.17113-11.264 32.50087-2.871652 67.806609 21.882435 92.137739l178.509913 175.638261-41.405217 243.378087c-5.810087 33.925565 9.282783 68.719304 38.555826 88.687304 28.627478 19.255652 67.005217 21.370435 97.836522 5.164522l211.745391-112.39513 211.878957 112.417391c13.712696 7.234783 29.094957 11.063652 44.521739 11.063652 19.010783 0 37.420522-5.609739 53.337043-16.317217 29.139478-19.878957 44.210087-54.650435 38.4-88.576l-41.382957-243.400348 178.532174-175.638261C1022.048294 451.917913 1030.440641 416.589913 1019.109859 384zM966.062207 444.527304l-195.094261 191.955478 45.278609 266.329043c2.938435 17.096348-4.585739 34.05913-19.478261 44.232348-15.248696 10.24-35.817739 11.330783-52.045913 2.782609L512.00725 826.323478l-232.537043 123.436522c-16.406261 8.637217-36.997565 7.479652-52.045913-2.671304-15.048348-10.262261-22.572522-27.247304-19.634087-44.343652l45.30087-266.284522-195.072-191.955478c-12.377043-12.154435-16.606609-29.718261-11.063652-45.723826 5.765565-16.384 20.524522-28.182261 38.622609-30.786783l266.48487-39.112348 115.97913-237.122783c7.880348-16.11687 25.154783-26.534957 43.987478-26.534957 18.899478 0 36.173913 10.395826 44.054261 26.512696l115.95687 237.122783 266.418087 39.023304c18.075826 2.671304 32.901565 14.514087 38.64487 30.809043C982.668815 414.786783 978.43925 432.328348 966.062207 444.527304zM509.046555 376.898783c-45.590261 0-82.320696 13.913043-109.122783 41.316174-44.744348 45.746087-43.78713 112.194783-43.720348 115.021913 0.26713 12.109913 10.173217 21.726609 22.238609 21.726609 0.133565 0 0.289391 0 0.422957 0 12.265739-0.222609 22.016-10.373565 21.837913-22.639304 0-0.512-0.400696-51.066435 31.254261-83.18887 18.098087-18.387478 44.054261-27.692522 77.06713-27.692522 12.288 0 22.26087-9.97287 22.26087-22.26087S521.334555 376.898783 509.046555 376.898783z" p-id="8567" fill="#d4237a"></path></svg>
+												</span>
+												<span th:text="${session.videoPlay.getVideoCollection()}"></span>
+											</a>
+										</div>
+									</div>
+									<div class="col-sm-6 my-auto">
+										<div class="video-shere">
+											<h5 class="mb-0">转发：</h5>
+											<div>
+												<ul class="list-inline-item mb-0">
+													<li class="list-inline-item">
+														<a href="#">
+															<svg class="icon" aria-hidden="true">
+																<use xlink:href="#icon-QQ"></use>
+															</svg>
+														</a>
+													</li>
+													<li class="list-inline-item">
+														<a href="#">
+															<svg class="icon" aria-hidden="true">
+																<use xlink:href="#icon-weixin"></use>
+															</svg>
+														</a>
+													</li>
+													<li class="list-inline-item">
+														<a href="#">
+															<svg class="icon" aria-hidden="true">
+																<use xlink:href="#icon-weibo"></use>
+															</svg>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 评论模块 -->
+							<div class="pb-100">
+								<div id="comments" class="comments-area">
+									<div id="respond" class="comment-respond">
+
+										<!--
+										    此评论textarea文本框部分使用的https://github.com/alexdunphy/flexText此插件
+										-->
+										<div class="commentAll" style="width: 1050px;">
+											<!--评论区域 begin-->
+											<div class="reviewArea clearfix">
+												<textarea class="content comment-input" placeholder="请在此留下你的看法" keyUP(this)></textarea>
+												<a href="javascript:;" class="plBtn">评论</a>
+											</div>
+											<!--评论区域 end-->
+											<!--回复区域 begin-->
+											<div class="comment-show">
+												<div class="comment-show-con clearfix" th:each="tp:${session.topics}">
+													<div class="comment-show-con-img pull-left"><img th:src="@{${tp.userImg}}" alt=""></div>
+													<div class="comment-show-con-list pull-left clearfix">
+														<div class="pl-text clearfix">
+<!--															<a href="#" class="comment-size-name">张三 : </a>-->
+															<input type="hidden" id="comment-topid-id" th:value="${tp.topicId}">
+															<input type="hidden" id="comment-user-name" th:value="${tp.userNickName}">
+															<input type="hidden" id="comment-user-id" th:value="${tp.fromUid}">
+															<a class="comment-size-name"><span th:text="${tp.userNickName}"></span>:</a>
+															<span class="my-pl-con" th:text="${tp.content}"></span>
+														</div>
+														<div class="date-dz">
+															<span class="date-dz-left pull-left comment-time" th:text="${#dates.format(tp.topicTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+
+															<div class="pl-text hfpl-text clearfix">
+															<span class="my-pl-con">IP地址：<span th:text="${tp.ipAdress}"></span></span>
+															<span class="my-pl-con" style="color: red"><span th:text="${tp.topicFlag}"></span></span>
+															</div>
+
+															<div class="date-dz-right pull-right comment-pl-block">
+																<a href="javascript:;" class="removeBlock">删除</a>
+																<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+																<span class="pull-left date-dz-line">|</span>
+																<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+															</div>
+														</div>
+														<div class="hf-list-con" >
+
+
+
+															<div th:each="rp:${tp.replys}">
+															<div class="all-pl-con">
+																<div class="pl-text hfpl-text clearfix">
+																	<a href="#" class="comment-size-name"><span th:text="${rp.toUserNickName}"></span>: </a>
+																	<span class="my-pl-con">
+																		回复<a href="#" class="atName">@<span th:text="${rp.fromUserNickName}" ></span></a>
+																		<span th:text="${rp.content}"></span>
+																	</span>
+<!--																	<input type="hidden" id="comment-user-name" th:value="${rp.toUserNickName}">-->
+																</div>
+																<div class="date-dz">
+																	<span class="date-dz-left pull-left comment-time" th:text="${#dates.format(rp.topicTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+
+																	<div class="pl-text hfpl-text clearfix">
+																	<span class="my-pl-con">IP地址：<span th:text="${rp.ipAdress}"></span></span>
+																	<span class="my-pl-con" style="color: red"><span th:text="${rp.replyFlag}"></span></span>
+																	</div>
+
+																	<div class="date-dz-right pull-right comment-pl-block">
+																		<a href="javascript:;" class="removeBlock">删除</a>
+																		<span class="pull-left date-dz-line">|</span>
+																		<a href="javascript:;" class="date-dz-z pull-left">
+																			<i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)
+																		</a> </div>
+																	</div>
+															</div>
+															</div>
+
+
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<!--回复区域 end-->
+										</div>
+
+
+
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<!-- part3 -->
+						<!-- part3 -->
+						<!-- part3 -->
+						<!-- part3 -->
+						<!-- part3 -->
+
+						<div class="col-xl-4 col-md-5">
+							<div id="custom_html-2" class="widget_text widget widget-video widget_custom_html">
+								<div class="textwidget custom-html-widget">
+									<!-- <a href="https://1.envato.market/c/2317554/903979/4415?subId1=html_homepage" target="_top" id="903979" rel="noopener">
+                                        <img src="static/picture/4415-903979.jpg" border="0" alt="Image"width="970" height="250">
+                                    </a>
+                                    <img height="0" width="0" src="static/picture/4415.jpg" alt="Ad" style="position:absolute;visibility:hidden;"border="0"> -->
+									<div class="video-item-card">
+										<div class="video-content">
+											<div class="d-flex"><a href="#" class="avatar">
+												<img th:src="@{${session.videoUser.getUserImg()}}"></a>
+												<div class="my-auto">
+													<h5 th:text="${session.videoPlay.getVideoTitle()}"></h5>
+													<p th:text="${session.videoUser.getUserNickName()}"></p>
+													<svg class="icon2" aria-hidden="true">
+														<use xlink:href="#icon-shipin2"></use>
+													</svg>
+													<span th:text="${session.videoPlay.getVideoPlayAmount()}"></span>
+													&nbsp;&nbsp;&nbsp;&nbsp;
+													<svg class="icon2" aria-hidden="true">
+														<use xlink:href="#icon-rili"></use>
+													</svg>
+													<span th:text="${#dates.format(session.videoPlay.getUploadTime(),'yyyy-MM-dd')}"></span>
+
+													<p>来自：<span th:text="${session.videoUser.getUserAddress()}"></span></p>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+							<div id="viewtube_related_videos-2" class="widget widget-video widget_viewtube_related_videos">
+								<ul class="sidebar-related-video">
+									<li th:each="v4:${session.user1}" >
+										<input type="hidden" th:value="${v4.videoId}">
+										<div class="related-video-thumb" onclick="playVideo(this)"><a href="">
+											<img th:src="@{${v4.imgPath}}" alt="Image"></a></div>
+										<div class="related-video-content">
+											<p th:text="${v4.videoTitle}"></p>
+											<ul>
+												<li><h6 th:text="${v4.userNickName}"></h6></li>
+<!--												<li><a class="author" href="#">Bayley Robertson </a></li>-->
+												<li>
+<!--													<div class="d-flex video-meta-bottom">703 Views o 5 months ago </div>-->
+													<p>播放量：<a th:text="${v4.videoPlayAmount}"></a></p>
+												</li>
+											</ul>
+										</div>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+<footer class="site-footer">
+
+	<div class="copyright-bar">
+		<div class="col-sm-12 text-center">
+<!--			<p>Copyright (c) 2021 ViewTube All Rights By <a href="http://www.sucai8.cn">sucai8.cn</a>. </p>-->
+			<p>Copyright (c) 2022 HuiYan All Rights By HuiYan.cn.</p>
+		</div>
+	</div>
+</footer>
+<div id="backtotop" style="display: block;">
+	<!-- <i class="iconfont glyphicon glyphicon-chevron-up"></i> -->
+	<svg class="icon" aria-hidden="true">
+		<use xlink:href="#icon-up-arrow"></use>
+	</svg>
+</div>
+<script th:src="@{/js/iconfont.js}"></script>
+<script th:src='@{/js/plugins.js}'></script>
+<script th:src='@{/js/main.js}'></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.flexText.js}"></script>
+<!--textarea高度自适应-->
+<script type="text/javascript">
+	$(function () {
+		$('.content').flexText();
+	});
+</script>
+<!--textarea限制字数-->
+<script type="text/javascript">
+	function keyUP(t){
+		var len = $(t).val().length;
+		if(len > 139){
+			$(t).val($(t).val().substring(0,140));
+		}
+	}
+</script>
+<!--点击评论创建评论条-->
+<script type="text/javascript" th:inline="javascript">
+	$('.commentAll').on('click','.plBtn',function(){
+		var myDate = new Date();
+		//获取当前年
+		var year=myDate.getFullYear();
+		//获取当前月
+		var month=myDate.getMonth()+1;
+		//获取当前日
+		var date=myDate.getDate();
+		var h=myDate.getHours();       //获取当前小时数(0-23)
+		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+		if(m<10) m = '0' + m;
+		var s=myDate.getSeconds();
+		if(s<10) s = '0' + s;
+		var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
+		//获取输入内容
+		var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
+		console.log(oSize);
+
+		// alert(now)
+		// alert(oSize)
+		var videoId=[[${session.videoPlay.getVideoId}]];
+		alert(videoId)
+
+		$.ajax({
+			url: "/topic/addTopic",
+			type: "post",
+			data: 'content='+oSize,
+			success:function(msg){
+				// alert(msg)
+				if(msg=='ok'){
+					// location.href="/video/setToVideo?videoId="+videoId;
+
+					$.ajax({
+						url: "/video/setToVideo",
+						type: "post",
+						data: "videoId=" + videoId,
+						success:function(msg){
+							if(msg=='ok'){
+								location.href="/video/toVideo";
+							}else{
+								alert("视频播放出错！")
+								location.href="/video/loadVideoImg";
+							}
+						}
+					})
+
+
+				}else if(msg='keywordError'){
+					alert("含有敏感词汇，不予发布！")
+				}else if(msg='error'){
+					alert("发生未知错误！")
+				}else{
+					alert("未实名认证")
+					location.href="/user/toUserShiMing";
+				}
+			}
+		})
+
+
+
+		var commentImg=[[${session.loginUser.getUserImg()}]];
+		var commentNickName=[[${session.loginUser.getUserNickName()}]];
+
+		//动态创建评论模块
+		oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src='+commentImg+'></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">'+commentNickName+':'+'</a><span class="my-pl-con">&nbsp;'+ oSize +'</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div><div class="hf-list-con"></div></div> </div>';
+		if(oSize.replace(/(^\s*)|(\s*$)/g, "") != ''){
+			$(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
+			$(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
+		}
+	});
+</script>
+<!--点击回复动态创建回复块-->
+<script type="text/javascript">
+	$('.comment-show').on('click','.pl-hf',function(){
+		//获取回复人的名字
+		// var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+		var fhName = $("#comment-user-name").val()+':';
+		// alert("获取评论的姓名："+fhName)
+
+
+
+		//回复@
+		var fhN = '回复@'+fhName;
+		//var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
+		var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> <a href="javascript:;" class="hf-pl">评论</a></div>';
+		//显示回复
+		if($(this).is('.hf-con-block')){
+			$(this).parents('.date-dz-right').parents('.date-dz').append(fhHtml);
+			$(this).removeClass('hf-con-block');
+			$('.content').flexText();
+			$(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding','6px 15px');
+			//console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
+			//input框自动聚焦
+			$(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val(fhN);
+		}else {
+			$(this).addClass('hf-con-block');
+			$(this).parents('.date-dz-right').siblings('.hf-con').remove();
+		}
+	});
+</script>
+<!--评论回复块创建-->
+<script type="text/javascript" th:inline="javascript">
+	$('.comment-show').on('click','.hf-pl',function(){
+		var oThis = $(this);
+		var myDate = new Date();
+		//获取当前年
+		var year=myDate.getFullYear();
+		//获取当前月
+		var month=myDate.getMonth()+1;
+		//获取当前日
+		var date=myDate.getDate();
+		var h=myDate.getHours();       //获取当前小时数(0-23)
+		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+		if(m<10) m = '0' + m;
+		var s=myDate.getSeconds();
+		if(s<10) s = '0' + s;
+		var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
+		//获取输入内容
+		var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
+		console.log(oHfVal)
+		var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+		var oAllVal = '回复@'+oHfName;
+
+		if(oHfVal.replace(/^ +| +$/g,'') == '' || oHfVal == oAllVal){
+		}else {
+			$.getJSON("/json/pl.json",function(data){
+				var oAt = '';
+				var oHf = '';
+				$.each(data,function(n,v){
+					delete v.hfContent;
+					delete v.atName;
+					var arr;
+					var ohfNameArr;
+					if(oHfVal.indexOf("@") == -1){
+						data['atName'] = '';
+						data['hfContent'] = oHfVal;
+					}else {
+						arr = oHfVal.split(':');
+						ohfNameArr = arr[0].split('@');
+						data['hfContent'] = arr[1];
+						data['atName'] = ohfNameArr[1];
+					}
+					if(data.atName == ''){
+						oAt = data.hfContent;
+					}else {
+						oAt = '回复<a href="#" class="atName">@'+data.atName+'</a> : '+data.hfContent;
+					}
+					oHf = data.hfName;
+				});
+
+				var topicId = $("#comment-topid-id").val();
+				var toUid=$("#comment-user-id").val();
+				// alert("data.atName:"+data.atName)
+				// alert("data.hfContent:"+data.hfContent)
+
+				$.ajax({
+					url: "/reply/addTopicReply",
+					type: "post",
+					data: {'topicId':topicId,'content':data.hfContent,'toNickName':data.atName,'toUid':toUid},
+					success:function(msg){
+						if(msg=='ok'){
+							// location.href="/video/toVideo";
+						}else{
+							alert("未实名认证")
+							location.href="/user/toUserShiMing";
+						}
+					}
+				})
+
+				var toNickName=[[${session.loginUser.getUserNickName()}]];
+				// var oHtml = '<div class="all-pl-con"><div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name">'+toNickName+': </a><span class="my-pl-con">'+oAt+'</span></div><div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"> <a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div></div>';
+				var oHtml = '<div class="all-pl-con"><div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name">'+toNickName+': </a><span class="my-pl-con">'+oAt+'</span></div><div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"> <a href="javascript:;" class="removeBlock">删除</a><span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div></div>';
+
+				oThis.parents('.hf-con').parents('.comment-show-con-list').find('.hf-list-con').css('display','block').prepend(oHtml) && oThis.parents('.hf-con').siblings('.date-dz-right').find('.pl-hf').addClass('hf-con-block') && oThis.parents('.hf-con').remove();
+			});
+		}
+	});
+</script>
+<!--删除评论块-->
+<script type="text/javascript">
+	$('.commentAll').on('click','.removeBlock',function(){
+		var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+		if(oT.siblings('.all-pl-con').length >= 1){
+			oT.remove();
+		}else {
+			$(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display','none')
+			oT.remove();
+		}
+		$(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
+
+	})
+</script>
+<!--点赞-->
+<script type="text/javascript">
+	$('.comment-show').on('click','.date-dz-z',function(){
+		var zNum = $(this).find('.z-num').html();
+		if($(this).is('.date-dz-z-click')){
+			zNum--;
+			$(this).removeClass('date-dz-z-click red');
+			$(this).find('.z-num').html(zNum);
+			$(this).find('.date-dz-z-click-red').removeClass('red');
+		}else {
+			zNum++;
+			$(this).addClass('date-dz-z-click');
+			$(this).find('.z-num').html(zNum);
+			$(this).find('.date-dz-z-click-red').addClass('red');
+		}
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huiyan.dao.VideoDao">
+
+    <select id="queryVideosByVideoLike" resultType="com.huiyan.pojo.Video">
+         select * from user inner join video
+        on user.userId=video.userId and video.videoState='1' ORDER BY video.videoLike desc LIMIT 3
+    </select>
+
+    <select id="queryVideosByVideoPlayAmount" resultType="com.huiyan.pojo.Video">
+         select * from user inner join video
+        on user.userId=video.userId and video.videoState='1' ORDER BY video.videoPlayAmount desc LIMIT 6
+    </select>
+
+    <select id="queryVideosByUploadTime" resultType="com.huiyan.pojo.Video">
+         select * from user inner join video
+        on user.userId=video.userId and video.videoState='1' ORDER BY video.uploadTime desc LIMIT 8
+    </select>
+
+    <select id="queryVideoInfo" parameterType="String" resultType="com.huiyan.pojo.Video">
+
+         select * from  video
+         where videoId=#{videoId}
+    </select>
+
+    <select id="queryVideoByVideoType" parameterType="String" resultType="com.huiyan.pojo.Video">
+         select * from video inner join user
+         on video.userId=user.userId and videoType=#{videoType} and video.videoState='1'
+    </select>
+
+    <update id="changeVideoLikeAmount" parameterType="String">
+        update video set videoLike=#{videoLike} where videoId=#{videoId}
+    </update>
+
+    <update id="changeVideoCoinAmount" parameterType="String">
+        update video set videoCoin=#{videoCoin} where videoId=#{videoId}
+    </update>
+
+    <update id="changeVideoCollectionAmount" parameterType="String">
+        update video set videoCollection=#{videoCollection} where videoId=#{videoId}
+    </update>
+
+    <select id="searchVideoInfo" parameterType="String" resultType="com.huiyan.pojo.Video">
+        select * from video inner join user
+         on video.userId=user.userId and video.videoTitle like concat('%',#{searchInfo},'%') and video.videoState='1'
+
+    </select>
+
+    <update id="changeVideoPlayAmount" parameterType="String">
+          update video set videoPlayAmount=#{videoPlayAmount} where videoId=#{videoId}
+    </update>
+
+
+<!--    SELECT * from video where videoTitle like concat('%',#{searchInfo},'%')-->
+<!--   <select id="queryUserList" resultType="User">-->
+<!--        select videoId,videoTitle,videoTime,-->
+<!--        videoPath,videoInfo,imgPath,uploadTime,-->
+<!--        videoPlayAmount,videoLike,videoCoin,videoCollection,-->
+<!--        videoType,userId from  video-->
+
+<!--           select * from user-->
+<!--   </select>-->
+
+<!--    <select id="queryUserById" resultType="User">-->
+<!--        select * from user where id=#{id}-->
+<!--    </select>-->
+
+<!--    <insert id="addUser" parameterType="User">-->
+<!--        insert into user (id,name,pwd) values (#{id},#{name},#{pwd})-->
+<!--    </insert>-->
+
+<!--    <update id="updataUser" parameterType="User">-->
+<!--        update user set name=#{name},pwd=#{pwd} where id=#{id}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteUser" parameterType="int">-->
+<!--        delete from user where id = #{id}-->
+<!--    </delete>-->
+
+</mapper>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+	  xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>HuiYan-视频分类</title>
+		<link rel="stylesheet" th:href='@{/css/css.css}'>
+		<link rel="stylesheet" th:href='@{/css/default.css}'>
+		<link rel="stylesheet" th:href='@{/css/plugins.css}'>
+		<link rel="stylesheet" th:href='@{/css/style_video.css}'>
+		<link rel="stylesheet" th:href='@{/css/color.css}'>
+
+		<link rel="stylesheet" th:href="@{/css/iconfont.css}">
+		<link id="template-color" rel="stylesheet" th:href='@{/css/color.css}'>
+
+		<link rel="stylesheet" th:href="@{/css/style_comment.css}">
+		<link rel="stylesheet" th:href="@{/css/comment.css}">
+		<script th:inline="javascript">
+
+			function getVideoType(videoType) {
+				$.ajax({
+					url: "/video/getVideosByType",
+					type: "post",
+					data: "videoType=" + videoType,
+					success:function(msg){
+						if(msg=='ok'){
+							location.href="/video/toVideoGroup";
+						}else{
+							alert("！")
+
+						}
+					}
+				})
+
+			}
+
+			function playVideo(obj) {
+
+				var videoId=$(obj).prev().val();
+				// alert(videoId)
+
+				$.ajax({
+					url: "/video/setToVideo",
+					type: "post",
+					data: "videoId=" + videoId,
+					success:function(msg){
+						if(msg=='ok'){
+							location.href="/video/toVideo";
+						}else{
+							alert("请先登录！")
+							location.href="/user/toLogin";
+						}
+					}
+				})
+
+			}
+		</script>
+	</head>
+	<body>
+		<div id="preloader">
+			<div class="spinner">
+				<div class="uil-ripple-css">
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+
+		<!--TopBarStart!!!-->
+		<div th:insert="~{/commons/common_video::topBar1}"></div>
+		<div th:insert="~{/commons/common_video::topBar2}"></div>
+		<div th:insert="~{/commons/common_video::topBar3}"></div>
+		<!--TopBarEnd!!!!-->
+
+
+
+		<div class="container-fluid p-0">
+			<div class="d-flex topspace-90">
+				<div class="sidebar-menu open">
+					<!--SideBarStart!!!-->
+					<div th:insert="~{/commons/common_video::sideBar}"></div>
+					<!--SideBarEnd!!!-->
+				</div>
+				<div class="main-container">
+					<section class="pt-4 pb-100">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xl-4 col-lg-4 col-md-6" th:each="v4:${session.videoType}">
+									<div class="video-item-card">
+										<input type="hidden" th:value="${v4.videoId}" id="videoId">
+										<div class="video-thumb" onclick="playVideo(this)">
+											<video class="viewtube-player" preload="none" playsinline="" controls="" th:data-poster="@{${v4.imgUrl}}">
+<!--												<source src="https://www.dropbox.com/s/kdh44utn5buqdrk/Hacking-Satellites-with-300-Worth-of-TV-Gear.mp4?dl=1"-->
+<!--												 type="video/mp4">-->
+<!--												<source src="https://www.dropbox.com/s/kdh44utn5buqdrk/Hacking-Satellites-with-300-Worth-of-TV-Gear.mp4?dl=1"-->
+<!--												 type="video/webm"></video></div>-->
+											</video>
+											<div class="video-content">
+												<div class="d-flex">
+													<!--作者头像-->
+													<a href="#" class="avatar">
+														<img th:src="@{${v4.userImgUrl}}">
+													</a>
+													<div class="my-auto">
+														<h5 th:text="${v4.videoTitle}"></h5>
+														<ul class="list-inline">
+															<li class="list-inline-item">
+																<a class="author" th:text="${v4.userNickName}"></a>
+															</li>
+															<li class="list-inline-item">
+																<div class="d-flex video-meta-bottom" >
+																	<svg class="icon" aria-hidden="true">
+																		<use xlink:href="#icon-shipin2"></use>
+																	</svg>
+																	<span th:text="${v4.videoPlayAmount}"></span>
+																	&nbsp;&nbsp;&nbsp;&nbsp;
+																	<svg class="icon" aria-hidden="true">
+																		<use xlink:href="#icon-rili"></use>
+																	</svg>
+																	<span th:text="${#dates.format(v4.uploadTime,'yyyy-MM-dd')}"></span>
+																</div>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+
+									</div>
+								</div>
+
+
+
+<!--								<div class="col-xl-12">-->
+<!--									<nav class="navigation pagination">-->
+<!--										<h2 class="screen-reader-text">Posts navigation</h2>-->
+<!--										<div class="nav-links"><span aria-current="page" class="page-numbers current">1</span><a class="page-numbers"-->
+<!--											 href="#">2</a><a class="next page-numbers" href="#">Next </a></div>-->
+<!--									</nav>-->
+<!--								</div>-->
+							</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+		<footer class="site-footer">
+			<div class="copyright-bar">
+				<div class="col-sm-12 text-center">
+					<p>Copyright 2021 HuiYan All Rights By <a href="http://www.sucai8.cn">HuiYan.cn</a>. </p>
+				</div>
+			</div>
+		</footer>
+		<div id="backtotop" style="display: block;"><i class="fal fa-lg fa-arrow-up"></i></div>
+
+
+		<!--jQuery-->
+		<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+
+		<script th:src='@{/js/plugins.js}'></script>
+		<script th:src='@{/js/main.js}'></script>
+
+
+		<script th:src="@{/js/iconfont.js}"></script>
+	</body>
+</html>

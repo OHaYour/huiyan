@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Themezhub">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HuiYan-我的钱包</title>
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/styles_user.css}" rel="stylesheet">
+    <link th:href="@{/css/style_reg.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/snackbar.min.css}" rel="stylesheet">
+    <link th:href="@{/css/slick.css}" rel="stylesheet">
+    <link th:href="@{/css/slick-theme.css}" rel="stylesheet">
+    <link th:href="@{/css/themify.css}" rel="stylesheet">
+    <link th:href="@{/css/line-icons.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/flaticon.css}" rel="stylesheet">
+
+	<link th:href="@{/css/iconfont.css}" rel="stylesheet">
+	
+	<script type="text/javascript">
+		function recharge(count) {
+
+			// alert("调用了recharge："+count)
+
+			location.href="/payment/pay?money="+count;
+		}
+
+		function rechargePro() {
+
+			var money=$("#money").val();
+			location.href="/payment/pay?money="+money;
+		}
+
+		function rechargeVip(times,money) {
+
+		    var res=confirm("是否花费"+money+"枚Y币进行会员充值？")
+            if(res){
+                $.ajax({
+                    url: "/user/setVip",
+                    type: "post",
+                    data: {'times':times,'money':money},
+                    success:function(msg){
+                        if(msg=='consumeOk'){
+                            alert("恭喜，充值成功！")
+                            location.href="/user/toUserVip";
+                        }else if (msg=='balanceLow'){
+                            var res=confirm("余额不足，是否前往充值？")
+                            if (res){
+                                location.href="/user/toUserQianBao"
+                            }
+                        }
+                    }
+                })
+
+            }
+
+
+			// alert(times)
+			// alert(money)
+		}
+	</script>
+
+</head>
+
+<body>
+
+
+    <div id="main-wrapper">
+
+        <div class="header header-light dark-text head-shadow">
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <div class="container" th:insert="~{/commons/common_user::topBar1}"></div>
+
+
+        </div>
+
+        <div class="dashboard-wrap bg-light">
+
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <div class="collapse" id="MobNav" th:insert="~{/commons/common_user::topBar2}"></div>
+
+
+            <div class="dashboard-content">
+                <div class="dashboard-tlbar d-block mb-5">
+                    <div class="row">
+                        <div class="colxl-12 col-lg-12 col-md-12">
+                            <!-- <h1 class="ft-medium">修改密码</h1> -->
+                          <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item text-muted"><a href="#">个人中心</a></li>
+                                    <!-- <li class="breadcrumb-item text-muted"><a href="#">Dashboard</a></li> -->
+                                    <li class="breadcrumb-item"><a href="#" class="theme-cl">我的会员</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widg-bar d-block">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="_dashboard_content bg-white rounded mb-4">
+                               <div class="_dashboard_content_header br-bottom py-3 px-3">
+                                    <div class="_dashboard__header_flex">
+                                        <h4 class="mb-0 ft-medium fs-md">
+											<svg class="icon" aria-hidden="true">
+												<use xlink:href="#icon-biaotou-daoxu"></use>
+											</svg>
+											剩余天数</h4>
+                                    </div>
+                                </div>
+
+                                <div class="_dashboard_content_body py-3 px-3">
+									
+									<h2 style="color: royalblue"><strong th:text="${session.loginUser.getUserVipDay()}"></strong>天</h2>
+<!--                                   <h2 style="color: royalblue" th:text="${user.userBalance}">1000.00 Y币</h2>-->
+                                </div>
+                            
+							
+							<div class="_dashboard_content_header br-bottom py-3 px-3">
+							     <div class="_dashboard__header_flex">
+							         <h4 class="mb-0 ft-medium fs-md">
+										 <svg class="icon" aria-hidden="true">
+											 <use xlink:href="#icon-biaotou-daoxu"></use>
+										 </svg>
+										 充值天数</h4>
+							     </div>
+							 </div>
+							 
+							 
+							 <div class="_dashboard_content_body py-3 px-3">
+							 	
+							  <div class="row">
+								
+							  	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" onclick="rechargeVip(30,30)">
+							  		<div class="dash-widgets py-5 px-4 bg-success rounded">
+										
+										<div style="text-align: left;">
+											<h2 class="ft-medium mb-1 fs-xl text-light">30天</h2>
+											<p class="p-0 m-0 text-light fs-md">30.00Y币</p>
+										</div>
+										
+										<div style="text-align: right;">
+										<svg t="1648889983309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="46290" width="200" height="200"><path d="M885 409.2c-28.2 1.4-53.9-18.2-59.4-46.8l-29-150.5-585 112.6c-8.4 1.6-15.8 6.5-20.7 13.8-4.9 7.3-6.7 15.9-5.1 24.3 6 31.3-14.5 61.6-45.8 67.6-31.3 6.1-61.6-14.5-67.6-45.8-7.4-38.7 0.7-78.1 22.9-110.9 22.2-32.8 55.8-54.9 94.5-62.4L781.4 97.4c28.5-5.5 57.5 0.5 81.6 16.8 24.1 16.3 40.4 41 45.9 69.5l30.2 157c6 31.3-14.5 61.6-45.8 67.6-2.8 0.5-5.5 0.8-8.3 0.9z" fill="#00EFEF" p-id="46291"></path><path d="M861.6 281.7H162.1c-54.6 0-99 44.4-99 99V817c0 54.6 44.4 99.1 99 99.1h699.5c54.5 0 99-44.4 99-99.1V380.7c0-54.6-44.5-99-99-99zM178.5 397.1h666.6v60.1H178.5v-60.1z m666.6 403.5H178.5V570h666.6v230.6z" fill="#52A9FF" p-id="46292"></path><path d="M446.7 682.8H251.1c-20.7 0-37.6-16.9-37.6-37.6 0-20.7 16.9-37.6 37.6-37.6h195.5c20.7 0 37.6 16.9 37.6 37.6 0.1 20.7-16.9 37.6-37.5 37.6z" fill="#00EFEF" p-id="46293"></path></svg>
+										</div>
+							  		</div>
+							  	</div>
+							  	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" onclick="rechargeVip(90,88)">
+							  		<div class="dash-widgets py-5 px-4 bg-purple rounded">
+							  			<h2 class="ft-medium mb-1 fs-xl text-light">90天 </h2>
+							  			<p class="p-0 m-0 text-light fs-md">88.00Y币</p>
+							  			<div style="text-align: right;">
+							  			<svg t="1648889983309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="46290" width="200" height="200"><path d="M885 409.2c-28.2 1.4-53.9-18.2-59.4-46.8l-29-150.5-585 112.6c-8.4 1.6-15.8 6.5-20.7 13.8-4.9 7.3-6.7 15.9-5.1 24.3 6 31.3-14.5 61.6-45.8 67.6-31.3 6.1-61.6-14.5-67.6-45.8-7.4-38.7 0.7-78.1 22.9-110.9 22.2-32.8 55.8-54.9 94.5-62.4L781.4 97.4c28.5-5.5 57.5 0.5 81.6 16.8 24.1 16.3 40.4 41 45.9 69.5l30.2 157c6 31.3-14.5 61.6-45.8 67.6-2.8 0.5-5.5 0.8-8.3 0.9z" fill="#00EFEF" p-id="46291"></path><path d="M861.6 281.7H162.1c-54.6 0-99 44.4-99 99V817c0 54.6 44.4 99.1 99 99.1h699.5c54.5 0 99-44.4 99-99.1V380.7c0-54.6-44.5-99-99-99zM178.5 397.1h666.6v60.1H178.5v-60.1z m666.6 403.5H178.5V570h666.6v230.6z" fill="#52A9FF" p-id="46292"></path><path d="M446.7 682.8H251.1c-20.7 0-37.6-16.9-37.6-37.6 0-20.7 16.9-37.6 37.6-37.6h195.5c20.7 0 37.6 16.9 37.6 37.6 0.1 20.7-16.9 37.6-37.5 37.6z" fill="#00EFEF" p-id="46293"></path></svg>
+							  			</div>
+							  		</div>
+							  	</div>
+							  	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" onclick="rechargeVip(180,168)">
+							  		<div class="dash-widgets py-5 px-4 bg-danger rounded">
+							  			<h2 class="ft-medium mb-1 fs-xl text-light">180天</h2>
+							  			<p class="p-0 m-0 text-light fs-md">168.00Y币</p>
+							  			<div style="text-align: right;">
+							  			<svg t="1648889983309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="46290" width="200" height="200"><path d="M885 409.2c-28.2 1.4-53.9-18.2-59.4-46.8l-29-150.5-585 112.6c-8.4 1.6-15.8 6.5-20.7 13.8-4.9 7.3-6.7 15.9-5.1 24.3 6 31.3-14.5 61.6-45.8 67.6-31.3 6.1-61.6-14.5-67.6-45.8-7.4-38.7 0.7-78.1 22.9-110.9 22.2-32.8 55.8-54.9 94.5-62.4L781.4 97.4c28.5-5.5 57.5 0.5 81.6 16.8 24.1 16.3 40.4 41 45.9 69.5l30.2 157c6 31.3-14.5 61.6-45.8 67.6-2.8 0.5-5.5 0.8-8.3 0.9z" fill="#00EFEF" p-id="46291"></path><path d="M861.6 281.7H162.1c-54.6 0-99 44.4-99 99V817c0 54.6 44.4 99.1 99 99.1h699.5c54.5 0 99-44.4 99-99.1V380.7c0-54.6-44.5-99-99-99zM178.5 397.1h666.6v60.1H178.5v-60.1z m666.6 403.5H178.5V570h666.6v230.6z" fill="#52A9FF" p-id="46292"></path><path d="M446.7 682.8H251.1c-20.7 0-37.6-16.9-37.6-37.6 0-20.7 16.9-37.6 37.6-37.6h195.5c20.7 0 37.6 16.9 37.6 37.6 0.1 20.7-16.9 37.6-37.5 37.6z" fill="#00EFEF" p-id="46293"></path></svg>
+							  			</div>
+							  		</div>
+							  	</div>
+							  	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" onclick="rechargeVip(365,288)">
+							  		<div class="dash-widgets py-5 px-4 bg-blue rounded">
+							  			<h2 class="ft-medium mb-1 fs-xl text-light">365天</h2>
+							  			<p class="p-0 m-0 text-light fs-md">288.00Y币</p>
+							  			<div style="text-align: right;">
+							  			<svg t="1648889983309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="46290" width="200" height="200"><path d="M885 409.2c-28.2 1.4-53.9-18.2-59.4-46.8l-29-150.5-585 112.6c-8.4 1.6-15.8 6.5-20.7 13.8-4.9 7.3-6.7 15.9-5.1 24.3 6 31.3-14.5 61.6-45.8 67.6-31.3 6.1-61.6-14.5-67.6-45.8-7.4-38.7 0.7-78.1 22.9-110.9 22.2-32.8 55.8-54.9 94.5-62.4L781.4 97.4c28.5-5.5 57.5 0.5 81.6 16.8 24.1 16.3 40.4 41 45.9 69.5l30.2 157c6 31.3-14.5 61.6-45.8 67.6-2.8 0.5-5.5 0.8-8.3 0.9z" fill="#00EFEF" p-id="46291"></path><path d="M861.6 281.7H162.1c-54.6 0-99 44.4-99 99V817c0 54.6 44.4 99.1 99 99.1h699.5c54.5 0 99-44.4 99-99.1V380.7c0-54.6-44.5-99-99-99zM178.5 397.1h666.6v60.1H178.5v-60.1z m666.6 403.5H178.5V570h666.6v230.6z" fill="#52A9FF" p-id="46292"></path><path d="M446.7 682.8H251.1c-20.7 0-37.6-16.9-37.6-37.6 0-20.7 16.9-37.6 37.6-37.6h195.5c20.7 0 37.6 16.9 37.6 37.6 0.1 20.7-16.9 37.6-37.5 37.6z" fill="#00EFEF" p-id="46293"></path></svg>
+							  			</div>
+							  		</div>
+							  	</div>
+
+
+
+
+
+							  </div>
+
+							  
+							 </div>
+							
+							
+							</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- footer -->
+                <div class="row">
+                    <div class="col-md-12">
+<!--                        <div class="py-3"> 2022 Workplex. Designd By <a href="http://www.sucai8.cn">sucai8.cn</a>.</div>-->
+						<p>Copyright (c) 2022 HuiYan All Rights By HuiYan.cn.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ======================= dashboard Detail End ======================== -->
+
+        <!-- <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a> -->
+
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/slick.js}"></script>
+    <script th:src="@{/js/slider-bg.js}"></script>
+    <script th:src="@{/js/smoothproducts.js}"></script>
+    <script th:src="@{/js/snackbar.min.js}"></script>
+    <script th:src="@{/js/jQuery.style.switcher.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+	<script th:src="@{/js/iconfont.js}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Blog - ViewTube Template</title>
+		<link rel="stylesheet" href='static/css/css.css'>
+		<link rel="stylesheet" href='static/css/default.css'>
+		<link rel="stylesheet" href='static/css/plugins.css'>
+		<link rel="stylesheet" href='static/css/style_video.css'>
+		<link rel="stylesheet" href='static/css/color.css'>
+		<link id="template-color" rel="stylesheet" href='static/css/color.css'>
+	</head>
+	<body>
+		<div id="preloader">
+			<div class="spinner">
+				<div class="uil-ripple-css">
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+		<header class="site-header fixed-top">
+			<div class="container-fluid">
+				<div class="row justify-content-between">
+					<div class="col-xl-2 col-lg-2 my-auto d-none d-lg-block">
+						<div class="d-flex"><a href="#" class="sidebar-toggle"><i class="far fa-bars"></i></a>
+							<div class="logo my-auto"><a href="index.html" class="custom-logo-link"><img src="static/picture/logo.png" class="custom-logo"
+									 alt="ViewTube"></a></div>
+						</div>
+					</div>
+					<div class="col-xl-7 col-lg-7 my-auto d-none d-xl-block">
+						<form class="ajax-search-form" action="#"><input type="text" name="s" class="keyword" placeholder="Search"><button
+							 type="submit"><i class="fa fa-search"></i></button>
+							<ul class="datafetch"></ul>
+						</form>
+					</div>
+					<div class="col-xl-1 col-lg-1 my-auto text-right"><a class="upload-video" href="uploadVideo.html"><i class="far fa-video-plus"></i></a></div>
+					<div class="col-xl-2 col-lg-2 my-auto">
+						<div class="d-flex">
+							<div class="d-flex my-auto"><i class="fad fa-sun my-auto"></i><label class="toggle-switch"><input type="checkbox"><span
+									 class="slider round"></span></label></div>
+							<div class="d-flex float-right">
+								<div class="top-header-action">
+									<div class="widget-header">
+										<div class="my-account-widget">
+											<div class="my-account-button"><i class="fad fa-user"></i></div>
+											<div class="my-account-content">
+												<div class="header-profile-login">
+													<h6 class="text-center">Log In to Your Account</h6>
+													<form name="loginform" id="loginform" action="#" method="post">
+														<p class="login-username"><label for="user_login">Username or Email Address</label><input type="text"
+															 name="log" id="user_login" class="input" value="" size="20"></p>
+														<p class="login-password"><label for="user_pass">Password</label><input type="password" id="user_pass"
+															 name="pwd"></p>
+														<p class="login-remember"><label><input name="rememberme" type="checkbox" id="rememberme" value="forever">Remember
+																Me</label></p>
+														<p class="login-submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary"
+															 value="Log In"></p>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="off-canvas-menu-bar">
+			<div class="pl-30 pr-30">
+				<div class="row">
+					<div class="col-7 my-auto"><a href="index.html" class="custom-logo-link" rel="home" aria-current="page"><img width="512"
+							 height="85" src="static/picture/logo.png" class="custom-logo" alt="ViewTube"></a></div>
+					<div class="col-3 my-auto"><label class="toggle-switch"><input type="checkbox"><span class="slider round"></span></label></div>
+					<div class="col-2 my-auto">
+						<div class="mobile-nav-toggler"><span class="fas fa-bars"></span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="off-canvas-menu">
+			<div class="menu-backdrop"></div><i class="close-btn fa fa-close"></i>
+			<nav class="mobile-nav">
+				<div class="text-center pt-3 pb-3"><a href="index.html" class="custom-logo-link" rel="home"><img src="static/picture/logo.png"
+						 class="custom-logo" alt="Sayara"></a></div>
+				<ul class="navigation"></ul>
+			</nav>
+		</div>
+		<div class="container-fluid p-0">
+			<div class="d-flex topspace-90">
+				<div class="sidebar-menu open">
+					<nav class="desktop-menu">
+						<ul class="menu">
+							<li class="menu-item current-menu-item"><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+							<li class="menu-item"><a href=""><i class="fab fa-wordpress"></i><span>Blog</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fab fa-youtube"></i><span>Video</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-camera"></i><span>Action</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fab fa-amazon"></i><span>Adventure</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-podcast"></i><span>Drama</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-coffee"></i><span>Fantacy</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-gamepad"></i><span>Games</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-burn"></i><span>Horror</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fab fa-chrome"></i><span>Mystrey</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-newspaper"></i><span>News</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-heart"></i><span>Romance</span></a></li>
+							<li class="menu-item"><a href="archive.html"><i class="fas fa-flask"></i><span>Science fiction</span></a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="main-container">
+					<section class="breadcrumbs">
+						<div class="container">
+							<h1>Blog</h1>
+							<ul class="trail-items" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+								<li class="trail-item trail-begin"><a href="index.html"><span itemprop="name">Home</span></a>
+									<meta itemprop="position" content="1">
+								</li>
+								<li class="trail-item trail-end"><span itemprop="item"><span itemprop="name">Blog</span></span>
+									<meta itemprop="position" content="3">
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section class="section-padding bg-gray">
+						<div class="row justify-content-center">
+							<div class="col-xl-8 col-md-7">
+								<div class="blog-item">
+									<div class="blog-thumb"><a href="single.html"><img src="static/picture/ben-collins-SpDOwp6PnBs-unsplash.jpg"
+											 alt=""></a></div>
+									<div class="blog-content">
+										<h4><a href="#">Drama Is Life With The Dull Bits Cut Out</a></h4>
+										<div class="blog-meta">
+											<ul class="list-inline">
+												<li class="list-inline-item"><a href="#"><img src="static/picture/6b1345063abbc415fde0677567f2cf59.jpeg.jpg"
+														 alt="Bayley Robertson"></a><span>Bayley Robertson</span></li>
+												<li class="list-inline-item"><span><i class="fal fa-tags"></i><a href="#">Body Parts</a></span></li>
+												<li class="list-inline-item"><span><i class="fal fa-comments-alt"></i><a href="#">2 Comments</a></span></li>
+											</ul>
+										</div>Lorem ipsum dolor sit amet,consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo...
+									</div>
+								</div>
+								<div class="blog-item">
+									<div class="blog-thumb"><a href="single.html"><img src="static/picture/troy-t-9sQgt_cR50c-unsplash.jpg" alt=""></a></div>
+									<div class="blog-content">
+										<h4><a href="single.html">Filmmaking Can Give You Everything</a></h4>
+										<div class="blog-meta">
+											<ul class="list-inline">
+												<li class="list-inline-item"><a href="#"><img src="static/picture/f71275f88816857574841b57a6f67aae.jpeg.jpg"
+														 alt="Chenai Simon"></a><span>Chenai Simon</span></li>
+												<li class="list-inline-item"><span><i class="fal fa-tags"></i><a href="#">Body Parts</a></span></li>
+												<li class="list-inline-item"><span><i class="fal fa-comments-alt"></i><a href="#">2 Comments</a></span></li>
+											</ul>
+										</div>Lorem ipsum dolor sit amet,consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo...
+									</div>
+								</div>
+								<div class="blog-item">
+									<div class="blog-thumb"><a href="single.html"><img src="static/picture/kal-visuals-IJzTAns4kUk-unsplash.jpg"
+											 alt=""></a></div>
+									<div class="blog-content">
+										<h4><a href="single.html">I Love Editing. It’s One Of My Favorite.</a></h4>
+										<div class="blog-meta">
+											<ul class="list-inline">
+												<li class="list-inline-item"><a href="#"><img src="static/picture/48dc418ef002957c6c867cb40aa191cc.jpeg.jpg"
+														 alt="David Parker"></a><span>David Parker</span></li>
+												<li class="list-inline-item"><span><i class="fal fa-tags"></i><a href="#">Body Parts</a></span></li>
+												<li class="list-inline-item"><span><i class="fal fa-comments-alt"></i><a href="https://themebing.com/html/viewtube/single.html#comments">2
+															Comments</a></span></li>
+											</ul>
+										</div>Lorem ipsum dolor sit amet,consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo...
+									</div>
+								</div>
+								<div class="blog-item">
+									<div class="blog-thumb"><a href="single.html"><img src="static/picture/gordon-cowie-PlDMOtUuuGE-unsplash.jpg"
+											 alt=""></a></div>
+									<div class="blog-content">
+										<h4><a href="single.html">Filmmaking is a miracle of collaboration.</a></h4>
+										<div class="blog-meta">
+											<ul class="list-inline">
+												<li class="list-inline-item"><a href="#"><img src="static/picture/acdbf3fcda4c1f108221a12844f087f0.jpeg.jpg"
+														 alt="Harry Olson"></a><span>Harry Olson</span></li>
+												<li class="list-inline-item"><span><i class="fal fa-tags"></i><a href="#">Accessories</a></span></li>
+												<li class="list-inline-item"><span><i class="fal fa-comments-alt"></i><a href="https://themebing.com/html/viewtube/single.html#comments">2
+															Comments</a></span></li>
+											</ul>
+										</div>Lorem ipsum dolor sit amet,consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo...
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-md-5">
+								<aside id="secondary" class="widget-area">
+									<div id="search-2" class="widget widget_search">
+										<form role="search" class="search-form" action="#"><label><span class="screen-reader-text">Search for:</span><input
+												 type="search" class="search-field" placeholder="Search …" value="" name="s"></label><input type="submit"
+											 class="search-submit" value="Search"></form>
+									</div>
+									<div id="viewtube_recent_posts-2" class="widget widget_viewtube_recent_posts">
+										<h4 class="widget-title">Recent Posts</h4>
+										<ul class="sidebar-recent-post">
+											<li>
+												<div class="recent-post-thumb"><a href="#"><img src="static/picture/ben-collins-SpDOwp6PnBs-unsplash-200x160.jpg"
+														 alt=""></a></div>
+												<div class="recent-post-content">
+													<p><a href="#">Drama Is Life With The Dull Bits Cut Out</a></p><span>May 20,2020</span>
+												</div>
+											</li>
+											<li>
+												<div class="recent-post-thumb"><a href="#"><img src="static/picture/troy-t-9sQgt_cR50c-unsplash-200x160.jpg"
+														 alt=""></a></div>
+												<div class="recent-post-content">
+													<p><a href="#">Filmmaking Can Give You Everything</a></p><span>May 19,2020</span>
+												</div>
+											</li>
+											<li>
+												<div class="recent-post-thumb"><a href="#"><img src="static/picture/kal-visuals-IJzTAns4kUk-unsplash-200x160.jpg"
+														 alt=""></a></div>
+												<div class="recent-post-content">
+													<p><a href="#">I Love Editing. It’s One Of My Favorite.</a></p><span>May 19,2020</span>
+												</div>
+											</li>
+											<li>
+												<div class="recent-post-thumb"><a href="#"><img src="static/picture/gordon-cowie-PlDMOtUuuGE-unsplash-200x160.jpg"
+														 alt=""></a></div>
+												<div class="recent-post-content">
+													<p><a href="#">Filmmaking is a miracle of collaboration.</a></p><span>May 19,2020</span>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div id="categories-2" class="widget widget_categories">
+										<h4 class="widget-title">Categories</h4>
+										<ul>
+											<li><a href="#">Accessories</a></li>
+											<li><a href="#">Body Parts</a></li>
+											<li><a href="#">Engine &amp;Drivetrain</a></li>
+											<li><a href="#">Helmet</a></li>
+											<li><a href="#">Interior Parts</a></li>
+										</ul>
+									</div>
+									<div class="widget widget_tag_cloud">
+										<h4 class="widget-title">Tags</h4>
+										<div class="tagcloud"><a href="#">Air Filters</a><a href="#">Brake Discs</a><a href="#">Bumpers</a><a href="#">Car
+												Care</a><a href="#">Car Covers</a><a href="#">Cargo Accessories</a><a href="#">Consoles &amp;Organizers</a><a
+											 href="#">Corner Lights</a><a href="#">Floor Mats</a><a href="#">Fog Lights</a><a href="#">Hoods</a><a href="#">Wheel
+												Hubs</a></div>
+									</div>
+								</aside>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+		<footer class="site-footer">
+			<div class="container">
+				<div class="row pt-100 pb-50">
+					<div class="col-md-12 text-center"><a href="index.html"><img class="mb-70" src="static/picture/logo-alt.png" alt="Logo"></a></div>
+					<div class="col-xl col-lg-4 col-md-6 col-sm-12">
+						<h5>Product</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Video Player</a></li>
+							<li><a href="#">Create</a></li>
+							<li><a href="#">Live Streaming</a></li>
+							<li><a href="#">Screen Recorder</a></li>
+							<li><a href="#">Collaboration</a></li>
+							<li><a href="#">Monetization</a></li>
+						</ul>
+					</div>
+					<div class="col-xl col-lg-4 col-md-6 col-sm-12">
+						<h5>Resources</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Help Center</a></li>
+							<li><a href="#">Blog</a></li>
+							<li><a href="#">Video School</a></li>
+							<li><a href="#">OTT Resources</a></li>
+							<li><a href="#">Developers</a></li>
+							<li><a href="#">Students</a></li>
+						</ul>
+					</div>
+					<div class="col-xl col-lg-4 col-md-6 col-sm-12">
+						<h5>Affiliate</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Become a Partner</a></li>
+							<li><a href="#">Guidelines</a></li>
+							<li><a href="#">Live Streaming</a></li>
+							<li><a href="#">Hosting & Management</a></li>
+							<li><a href="#">Monetization</a></li>
+							<li><a href="#">Collaboration</a></li>
+						</ul>
+					</div>
+					<div class="col-xl col-lg-4 col-md-6 col-sm-12">
+						<h5>Quick Link</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Live Streaming</a></li>
+							<li><a href="#">Video Player</a></li>
+							<li><a href="#">Screen Recorder</a></li>
+							<li><a href="#">Monetization</a></li>
+							<li><a href="#">Create</a></li>
+							<li><a href="#">Collaboration</a></li>
+						</ul>
+					</div>
+					<div class="col-xl col-lg-4 col-md-6 col-sm-12">
+						<h5>Contact</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Become a Partner</a></li>
+							<li><a href="#">Guidelines</a></li>
+							<li><a href="#">Live Streaming</a></li>
+							<li><a href="#">Hosting & Management</a></li>
+							<li><a href="#">Monetization</a></li>
+							<li><a href="#">Collaboration</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="row pb-4">
+					<div class="col-xl-4 col-md-6 my-auto">
+						<ul class="list-inline social mb-0">
+							<li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fab fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+					<div class="col-xl-2 offset-xl-4 col-md-3"><a href="#"><img class="img-fluid" src="static/picture/playstore.png"
+							 title="playstore" alt="playstore"></a></div>
+					<div class="col-xl-2 col-md-3 my-auto"><a href="#"><img class="img-fluid" src="static/picture/appstore.png" title="appstore"
+							 alt="appstore"></a></div>
+				</div>
+			</div>
+			<div class="copyright-bar">
+				<div class="col-sm-12 text-center">
+					<p>Copyright (c) 2021 ViewTube All Rights By <a href="http://www.sucai8.cn">sucai8.cn</a>. </p>
+				</div>
+			</div>
+		</footer>
+		<div id="backtotop" style="display: block;"><i class="fal fa-lg fa-arrow-up"></i></div>
+		<script src='static/js/plugins.js'></script>
+		<script src='static/js/main.js'></script>
+	</body>
+</html>

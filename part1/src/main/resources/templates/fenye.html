@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>分页</title>
+
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+</head>
+<body>
+
+<div id="KeyWordPage"></div>
+
+
+<script th:src="@{/layui/layui.js}"></script>
+
+<script type="text/javascript">
+    function queryKeyWord() {
+        //保证不通过按钮发请求查询时，分页始终处于第一页
+        // var data1={pageNum:pageNum,pageSize:pageSize};
+        // pageNum=1;
+
+        $.ajax({
+            url: "/keyword/query"
+        })
+
+
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>登录</title>
+        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+        <!-- Font Awesome icons (free version)-->
+        <script th:src="@{https://use.fontawesome.com/releases/v5.15.4/js/all.js}" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+<!--        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" />-->
+<!--        <link th:href="@{https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap}" rel="stylesheet" />-->
+<!--        <link th:href="@{https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap}" rel="stylesheet" />-->
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/styles_login.css}" rel="stylesheet" />
+
+        <!--jQuery-->
+        <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+
+        <!-- 国内使用 -->
+        <script type="text/javascript" charset="utf-8" th:src="@{//g.alicdn.com/sd/ncpc/nc.js?t=2015052012}"></script>
+
+        <style>
+            .nc-container{
+                display: none;
+            }
+        </style>
+
+
+        <script type="text/javascript">
+            $(function (){
+                //对邮箱进行判断
+                $("#userEmail").blur(function(){
+                    var email=$("#userEmail").val();//获取到输入邮箱的值
+                    var emailReg=/^[a-zA-Z0-9]{5,10}[@][a-zA-Z0-9]{2,6}\.[a-z]{2,3}$/  //邮箱的正则表达式
+
+                    if(email==null||email==''){
+                        $("#userEmailTip").html("账号不能为空");
+                    }else if(!emailReg.test(email)){
+                        $("#userEmailTip").html("邮箱的格式不正确");
+                    }else{
+                        $("#userEmailTip").html("邮箱可用");
+                    }
+                })
+
+                $("#userPassword").blur(function () {
+
+                    var password=$("#userPassword").val();//获取到输入密码的值
+                    if(password==null||password==''){
+                        $("#userPasswordTip").html("密码不能为空")
+                    }
+
+                })
+            });
+
+            function userLogin() {
+
+                var email=$("#userEmail").val();//获取到输入邮箱的值
+                var password=$("#userPassword").val();//获取到输入密码的值
+
+                // alert("???"+email+"????"+password)
+
+                var flag1=false;
+                var flag2=false;
+
+                if(email==null||email==''){
+                    $("#userEmailTip").html("账号不能为空");
+                }else {
+                    flag1=true;
+                }
+
+                if(password==null||password==''){
+                    $("#userPasswordTip").html("密码不能为空")
+                }else{
+                    flag2=true;
+                }
+
+                if(flag1&&flag2){
+                    $.ajax({
+                            url:"/user/userLogin",
+                            type:"post",
+                            data:{'email': email, 'password': password},
+                            success: function (msg) {
+                                if (msg == 'loginOk') {
+
+                                    divShow();
+                                    // alert("调用了btn方法")
+                                    // location.href = "/index";
+                                }
+                            }
+                        }
+                    )
+                }
+
+            }
+
+
+            function divShow() {
+                // document.getElementById("btn").style.display="none"
+                document.getElementById("your-dom-id").style.display="block"
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <!-- Background Video-->
+        <video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source th:src="@{/assets/mp4/bg2.mp4}" type="video/mp4" /></video>
+        <!-- Masthead-->
+        <div class="masthead">
+            <div class="masthead-content text-white">
+                <div class="container-fluid px-4 px-lg-0">
+                    <h1 class="fst-italic lh-1 mb-4">快速登录</h1>
+          
+               
+                    <form>
+                        <!-- Email address input-->
+                        <div class="row input-group-newsletter">
+                            <div class="col">
+                                <input id="userEmail" class="form-control" type="text" placeholder="邮箱账号"  />
+                                <span id="userEmailTip"></span>
+                            </div>
+
+                            
+                        </div>
+						<br />
+						
+						<div class="row input-group-newsletter">
+						    <div class="col"><input id="userPassword" class="form-control"type="password" placeholder="密码" /></div>
+						    <div class="col-auto"><button class="btn btn-primary" type="button" onclick="userLogin()">Go!</button></div>
+						</div>
+                        <span id="userPasswordTip"></span>
+                        <br/>
+
+
+<!--                        <button id="btn" onclick="btn()">hahaha</button>-->
+                        <div id="your-dom-id" class="nc-container"></div> <!--No-Captcha渲染的位置，其中 class 中必须包含 nc-container-->
+					
+						<br />
+						
+						<a th:href="@{#}" style="color: #8FD19E;">忘记密码</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a th:href="@{/user/toRegister1}" style="color: #02D3A4;">没有账号？</a>
+<!--						<a th:href="@{/user/toRegister2}" style="color: #02D3A4;">没有账号？</a>-->
+
+          
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            // function btn() {
+            //     // document.getElementById("btn").style.display="none"
+            //     document.getElementById("your-dom-id").style.display="block"
+            // }
+
+            var nc_token = ["CF_APP_1", (new Date()).getTime(), Math.random()].join(':');
+            var NC_Opt =
+                {
+                    renderTo: "#your-dom-id",
+                    appkey: "CF_APP_1",
+                    scene: "register",
+                    token: nc_token,
+                    customWidth: 300,
+                    trans:{"key1":"code0"},
+                    elementID: ["usernameID"],
+                    is_Opt: 0,
+                    language: "cn",
+                    isEnabled: true,
+                    timeout: 3000,
+                    times:5,
+                    apimap: {
+                        // 'analyze': '//a.com/nocaptcha/analyze.jsonp',
+                        // 'get_captcha': '//b.com/get_captcha/ver3',
+                        // 'get_captcha': '//pin3.aliyun.com/get_captcha/ver3'
+                        // 'get_img': '//c.com/get_img',
+                        // 'checkcode': '//d.com/captcha/checkcode.jsonp',
+                        // 'umid_Url': '//e.com/security/umscript/3.2.1/um.js',
+                        // 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
+                        // 'umid_serUrl': 'https://g.com/service/um.json'
+                    },
+                    callback: function (data) {
+                        window.console && console.log(nc_token)
+                        window.console && console.log(data.csessionid)
+                        window.console && console.log(data.sig)
+                        // alert("666666")
+                        location.href = "/index";
+                    }
+                }
+            var nc = new noCaptcha(NC_Opt)
+            nc.upLang('cn', {
+                _startTEXT: "请按住滑块，拖动到最右边",
+                _yesTEXT: "验证通过",
+                _error300: "哎呀，出错了，点击<a href=\"javascript:__nc.reset()\">刷新</a>再来一次",
+                _errorNetwork: "网络不给力，请<a href=\"javascript:__nc.reset()\">点击刷新</a>",
+            })
+        </script>
+
+
+
+        <!-- Social Icons-->
+        <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
+        <div class="social-icons">
+            <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+                <a class="btn btn-dark m-3" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-dark m-3" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-dark m-3" href="#!"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+<!--        <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>-->
+        <!-- Core theme JS-->
+<!--        <script th:src="@{/js/scripts.js}"></script>-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!--        <script th:src="@{https://cdn.startbootstrap.com/sb-forms-latest.js}"></script>-->
+    </body>
+</html>

@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Themezhub">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HuiYan-修改密码</title>
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/styles_user.css}" rel="stylesheet">
+    <link th:href="@{/css/style_reg.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/snackbar.min.css}" rel="stylesheet">
+    <link th:href="@{/css/slick.css}" rel="stylesheet">
+    <link th:href="@{/css/slick-theme.css}" rel="stylesheet">
+    <link th:href="@{/css/themify.css}" rel="stylesheet">
+    <link th:href="@{/css/line-icons.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/flaticon.css}" rel="stylesheet">
+
+    <link th:href="@{/css/iconfont.css}" rel="stylesheet">
+
+    <script type="text/javascript">
+        function checkPwd() {
+
+            var oldPassword=$("#oldPassword").val();
+            var newPassword=$("#newPassword").val();
+            var confirmPassword=$("#confirmPassword").val();
+
+            var userId=$("#userId").val();
+            var userPassword=$("#userPassword").val();
+
+
+            //校验输入的密码是否正确，确认本人
+            if (oldPassword==userPassword) {
+
+                //校验输入密码是否一致
+                if (newPassword==confirmPassword) {
+                    $.ajax({
+                        url: "/user/changePwd",
+                        type: "post",
+                        data: {'userId':userId,'userPassword':newPassword},
+                        success: function (msg) {
+                            if (msg == "1") {
+                                alert("修改成功");
+                                //跳转到个人中心首页
+                                location.href="/user/toUserIndex";
+                            }
+                        }
+                    });
+
+                }else{
+                    alert("两次输入密码不一致")
+                    location.href = "/user/toUserChangePwd";
+                }
+
+            }else{
+                alert("与原密码不一致")
+                location.href = "/user/toUserChangePwd";
+            }
+
+
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="main-wrapper">
+
+
+        <div class="header header-light dark-text head-shadow">
+
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <!--TopBar1!!!-->
+            <div class="container" th:insert="~{/commons/common_user::topBar1}"></div>
+
+        </div>
+
+        <div class="dashboard-wrap bg-light">
+
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <!--TopBar2!!!-->
+            <div class="collapse" id="MobNav" th:insert="~{/commons/common_user::topBar2}"></div>
+
+
+
+            <div class="dashboard-content">
+                <div class="dashboard-tlbar d-block mb-5">
+                    <div class="row">
+                        <div class="colxl-12 col-lg-12 col-md-12">
+                            <!-- <h1 class="ft-medium">修改密码</h1> -->
+                          <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item text-muted"><a href="#">个人中心</a></li>
+                                    <!-- <li class="breadcrumb-item text-muted"><a href="#">Dashboard</a></li> -->
+                                    <li class="breadcrumb-item"><a href="#" class="theme-cl">修改密码</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widg-bar d-block">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="_dashboard_content bg-white rounded mb-4">
+                             <!--   <div class="_dashboard_content_header br-bottom py-3 px-3">
+                                    <div class="_dashboard__header_flex">
+                                        <h4 class="mb-0 ft-medium fs-md"><i class="fa fa-lock mr-1 theme-cl fs-sm"></i>修改密码</h4>
+                                    </div>
+                                </div> -->
+
+                                <div class="_dashboard_content_body py-3 px-3">
+                                    <form class="row">
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">旧密码</label>
+                                                <input id="oldPassword" type="text" class="form-control rounded" placeholder="">
+                                                <!--获取到session中的user信息，用于js中传值-->
+                                                <input id="userPassword" type="hidden" th:value="${session.loginUser.getUserPassword()}">
+                                                <input id="userId" type="hidden" th:value="${session.loginUser.getUserId()}">
+
+                                                <span id="oldPasswordTip"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">新密码</label>
+                                                <input id="newPassword" type="text" class="form-control rounded" placeholder="">
+                                                <span id="newPasswordTip"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">确认密码</label>
+                                                <input id="confirmPassword" type="text" class="form-control rounded" placeholder="">
+                                                <span id="confirmPasswordTip"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-lg-12">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-md ft-medium text-light rounded theme-bg" onclick="checkPwd()">保存</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- footer -->
+                <div class="row">
+                    <div class="col-md-12">
+<!--                        <div class="py-3"> 2022 Workplex. Designd By <a href="http://www.sucai8.cn">sucai8.cn</a>.</div>-->
+                        <p>Copyright (c) 2022 HuiYan All Rights By HuiYan.cn.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ======================= dashboard Detail End ======================== -->
+
+        <!-- <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a> -->
+
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/slick.js}"></script>
+    <script th:src="@{/js/slider-bg.js}"></script>
+    <script th:src="@{/js/smoothproducts.js}"></script>
+    <script th:src="@{/js/snackbar.min.js}"></script>
+    <script th:src="@{/js/jQuery.style.switcher.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+
+    <script th:src="@{/js/iconfont.js}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+
+</body>
+</html>

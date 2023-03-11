@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+
+<!--TopBarStart!!!-->
+<!--TopBarStart!!!-->
+<!--TopBarStart!!!-->
+
+
+
+
+    <header class="site-header fixed-top" th:fragment="topBar1">
+        <div class="container-fluid">
+            <div class="row justify-content-between">
+                <div class="col-xl-2 col-lg-2 my-auto d-none d-lg-block">
+                    <div class="d-flex">
+                        <a href="#" class="sidebar-toggle">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-zhedie2"></use>
+                            </svg>
+                        </a>
+                        <!--                    <div class="logo my-auto">-->
+                        <a href="" class="custom-logo-link">
+                            <img th:src="@{/picture/logo.png}" class="custom-logo" alt="ViewTube">
+                        </a>
+                        <!--                    </div>-->
+                    </div>
+                </div>
+
+                <!-- 搜索 -->
+                <div class="col-xl-7 col-lg-7 my-auto d-none d-xl-block">
+                    <form class="ajax-search-form" action="#">
+                        <input type="text" name="searchInfo" id="searchInfo" class="keyword" placeholder="搜索">
+                        <button type="submit" onclick="searchVideoInfo()">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-fangdajing"></use>
+                            </svg>
+                        </button>
+                        <ul class="datafetch"></ul>
+                    </form>
+                </div>
+
+                <!--            去上传视频页面-->
+                <!--            <div class="col-xl-1 col-lg-1 my-auto text-right">-->
+                <!--                <a class="upload-video" href="uploadVideo.html"><i class="far fa-video-plus"></i></a>-->
+                <!--            </div>-->
+                <!--            <div class="col-xl-1 col-lg-1 my-auto text-right">-->
+                <!--                <a class="upload-video" th:href="@{/video/toUploadVideo}"><button type="button">上传视频</button></a>-->
+                <!--            </div>-->
+
+                <!--            <div class="ui animated button" tabindex="0">-->
+
+
+                <!--                <div class="visible content">上传视频</div>-->
+                <!--                <div class="hidden content">-->
+                <!--                    <i class="right arrow icon"></i>-->
+                <!--                </div>-->
+                <!--                </a>-->
+                <!--            </div>-->
+
+                <!-- 投稿 -->
+                <div class="col-xl-1 col-lg-1 my-auto text-right">
+                    <a th:href="@{/video/toUploadVideo}">
+                        <div class="col-lg-12">
+                            <button type="submit">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-013shexiangji"></use>
+                                </svg>
+                            </button>
+                        </div>
+                    </a>
+                </div>
+
+                <!--            <a th:href="@{/video/toUploadVideo}">-->
+                <!--                <button type="button" class="py-2 px-3 bg-primary text-white border-0 rounded font-weight-bold">上传视频</button>-->
+                <!--            </a>-->
+
+
+                <div class="col-xl-2 col-lg-2 my-auto">
+                    <div class="d-flex">
+
+                        <!--                    切换logo的有无，可更换为切换背景-->
+<!--                        <div class="d-flex my-auto">-->
+<!--                            <i class="fad fa-sun my-auto"></i>-->
+<!--                            <label class="toggle-switch">-->
+<!--                                <input type="checkbox">-->
+<!--                                <span class="slider round"></span>-->
+<!--                            </label>-->
+<!--                        </div>-->
+
+<!--                        <h2 th:text="${session.loginUser}"></h2>-->
+                        <!--去登录的页面,使用shiro显示-->
+                        <div class="d-flex float-right" th:if="${session.loginUser==null}">
+                            <a href="#">
+                            <div class="top-header-action" onclick="toLogin()">
+
+                                    <div class="my-account-button">
+                                        <div class="d-flex">
+                                            <img th:src="@{/headImg/denglu.png}" style="border-radius:50%">
+                                        </div>
+                                    </div>
+                            </div>
+                            </a>
+                        </div>
+
+                        <div class="d-flex float-right" th:if="${session.loginUser!=null}">
+                            <div class="top-header-action">
+<!--                                <a href="video.html" class="avatar">-->
+                                    <div class="my-account-button" onclick="toUserIndex()">
+                                        <div class="d-flex">
+<!--                                            <img th:src="@{/headImg/5f3f9e3fd1319df5523edfb63ee6a0b3.jpeg}" style="border-radius:50%">-->
+                                            <img th:src="${session.loginUser.userImg}" style="border-radius:50%">
+
+                                        </div>
+                                    </div>
+<!--                                </a>-->
+                            </div>
+                        </div>
+
+
+<!--                        <div class="col-xl-1 col-lg-1 my-auto text-right">-->
+<!--                            <a th:href="@{/user/toLogin}">-->
+<!--                                <button type="button">-->
+<!--                                    <svg class="icon" aria-hidden="true">-->
+<!--                                        <use xlink:href="#icon-055"></use>-->
+<!--                                    </svg>-->
+
+<!--                                </button>-->
+<!--                            </a>-->
+<!--                        </div>-->
+
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="off-canvas-menu-bar" th:fragment="topBar2">
+        <div class="pl-30 pr-30">
+            <div class="row">
+                <div class="col-7 my-auto">
+                    <a href="" class="custom-logo-link" rel="home" aria-current="page">
+                        <img width="512" height="85" th:src="@{/picture/logo.png}" class="custom-logo" alt="ViewTube">
+                    </a>
+                </div>
+                <div class="col-3 my-auto"><label class="toggle-switch"><input type="checkbox"><span
+                        class="slider round"></span></label></div>
+                <div class="col-2 my-auto">
+                    <div class="mobile-nav-toggler"><span class="fas fa-bars"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="off-canvas-menu" th:fragment="topBar3">
+        <div class="menu-backdrop"></div>
+        <i class="close-btn fa fa-close"></i>
+        <nav class="mobile-nav">
+            <div class="text-center pt-3 pb-3"><a href="" class="custom-logo-link" rel="home"><img
+                    src="static/picture/logo.png"
+                    class="custom-logo" alt="Sayara"></a></div>
+            <ul class="navigation"></ul>
+        </nav>
+    </div>
+
+            <div class="sidebar-menu open" th:fragment="sideBar">
+                <nav class="desktop-menu">
+                    <ul class="menu">
+                        <li class="menu-item current-menu-item">
+                            <a th:href="@{/index}">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-a-fangziwuzijianzhu"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#remen">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-remen"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>热门</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#zuixin">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-zuixinlianzai"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>最新</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('知识')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-zhishi1"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>知识</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('科技')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-keji"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>科技</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('动漫')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-dongman"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>动漫</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('电影')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon--Dddianying-"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>电影</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('游戏')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-youxiji"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>游戏</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('音乐')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-yinle"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>音乐</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('美食')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-meishi1"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>美食</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('汽车')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-a-changpengqichechangpengchepaochexiaoqiche"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>汽车</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('舞蹈')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-wudao"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>舞蹈</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" onclick="getVideoType('生活')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-shenghuofuwu"></use>
+                                </svg>
+                                &nbsp;&nbsp;&nbsp;
+                                <span>生活</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+<div class="copyright-bar" th:fragment="footer">
+    <div class="col-sm-12 text-center">
+        <p>Copyright (c) 2022 HuiYan All Rights By <a href="http://www.sucai8.cn">HuiYan.cn</a>. </p>
+    </div>
+</div>
+
+
+
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+
+<nav id="navigation" class="navigation navigation-landscape"  th:fragment="topBar1">
+
+
+    <div class="nav-header">
+        <a class="nav-brand" href="#">
+            <img th:src="@{/picture/logo.png}" class="logo" alt="">
+        </a>
+        <div class="nav-toggle"></div>
+        <div class="mobile_nav">
+            <ul>
+                <!-- 	<li>
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-dark gray">
+                    <span class="embos_45"><i class="lni lni-power-switch mr-1 mr-1"></i>Logout</span>
+                </a>
+            </li> -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- <div class="page-title">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-center">
+
+                <h3>个人中心</h3>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="nav-menus-wrapper" style="transition-property: none;">
+<!--        <ul class="nav-menu">-->
+
+<!--            <li><a href="#">Home</a></li>-->
+<!--            <li><a href="javascript:void(0);">Find Job</a></li>-->
+<!--            <li><a href="javascript:void(0);">Candidates</a></li>-->
+<!--            <li><a href="javascript:void(0);">Employers</a></li>-->
+<!--            <li><a href="javascript:void(0);">Pages</a></li>-->
+
+<!--        </ul>-->
+
+        <ul class="nav-menu nav-menu-social align-to-right">
+            <li class="add-listing gray">
+                <a th:href="@{/index}">
+                    首页
+                </a>
+            </li>
+            <li class="add-listing gray">
+                <a th:href="@{/user/toLogin}">
+                     登出
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="dashboard-nav" th:fragment="topBar2">
+    <div class="dashboard-inner">
+        <ul data-submenu-title="个人中心">
+            <li>
+                <a th:href="@{/user/toUserIndex}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-a-fangziwuzijianzhu"></use>
+                    </svg>
+
+                我的信息</a>
+            </li>
+            <li>
+                <a th:href="@{/user/toUserUpdateInfo}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shenghuofuwu"></use>
+                    </svg>
+
+                修改信息</a>
+            </li>
+            <li>
+                <a th:href="@{/user/toUserShiMing}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon--Dddianying-"></use>
+                    </svg>
+                    实名认证</a>
+            </li>
+            <li>
+                <a th:href="@{/user/toUserChangePwd}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-xiugaimima"></use>
+                    </svg>
+                    修改密码</a>
+            </li>
+<!--            <li><a th:href="02manageResumes.html"><i class="lni lni-files mr-2"></i>会员</a></li>-->
+<!--            <li><a th:href="03dashboard-manage-jobs.html"><i class="lni lni-add-files mr-2"></i>会员积分</a></li>-->
+<!--            <li><a href="04dashboard-manage-applications.html"><i class="lni lni-briefcase mr-2"></i>我的信息</a></li>-->
+<!--            <li><a href="05dashboard-shortlisted-resume.html"><i class="lni lni-bookmark mr-2"></i>我的头像</a></li>-->
+            <li>
+                <a th:href="@{/user/toUserQianBao}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-wodeqianbao"></use>
+                    </svg>
+                    我的钱包</a>
+            </li>
+
+            <li>
+                <a th:href="@{/user/toUserVip}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-wodeqianbao"></use>
+                    </svg>
+                    会员充值</a>
+            </li>
+
+            <li>
+                <a th:href="@{/user/getUserOrders}">
+<!--                <a th:href="@{/user/toUserJiaoYi}">-->
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-yue-jine-chongzhi"></use>
+                    </svg>
+                    交易记录</a>
+            </li>
+
+        </ul>
+        <ul data-submenu-title="会员专区">
+            <li>
+            <a th:href="@{/user/toVipLottery}">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-chaoshijiaoyiliushui-bian"></use>
+                </svg>
+                幸运抽奖</a>
+            </li>
+
+            <li>
+                <a th:href="@{/user/toVipCube}">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-youxiji"></use>
+                    </svg>
+                    魔方游戏</a>
+            </li>
+<!--            <li><a th:href="07dashboard-messages.html"><i class="lni lni-user mr-2"></i>我的空间</a></li>-->
+<!--            <li><a th:href="08dashboard-change-password.html"><i class="lni lni-lock-alt mr-2"></i>视频创作</a></li>-->
+<!--            <li><a th:href="01dashboard.html; "><i class="lni lni-trash-can mr-2"></i>Delete Account</a></li>-->
+<!--            <li><a th:href="01dashboard.html"><i class="lni lni-power-switch mr-2"></i>Log Out</a></li>-->
+        </ul>
+    </div>
+</div>
+
+
+</html>

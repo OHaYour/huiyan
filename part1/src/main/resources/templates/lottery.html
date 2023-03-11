@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>转盘抽奖</title>
+
+    <link rel="stylesheet" th:href="@{/css/lottery.css}">
+	
+</head>
+
+<body>
+	
+	
+
+	
+   <div class="box-lottery">
+        <div class="lottery-wrap" style="transform: rotate(-45deg);">
+			<span class="lottery-span1" data-id="1">
+			    <i>谢谢参与</i><img th:src="@{/picture/lottery_03.png}" alt="谢谢参与">
+			</span>
+            <span class="lottery-span2" data-id="2">
+                <i>Y币<br>1个</i><img th:src="@{/picture/lottery_02.png}" alt="Y币1">
+            </span>
+            <span class="lottery-span3" data-id="3">
+                <i>Y币<br>5个</i><img th:src="@{/picture/lottery_02.png}" alt="Y币5">
+            </span>
+            <span class="lottery-span4" data-id="4">
+                <i>Y币<br>10个</i><img th:src="@{/picture/lottery_02.png}" alt="Y币10">
+            </span>
+            <span class="lottery-span5" data-id="5">
+                <i>Y币<br>50个</i><img th:src="@{/picture/lottery_02.png}" alt="Y币50">
+            </span>
+            <span class="lottery-span6" data-id="6">
+                <i>会员<br>1个月</i><img th:src="@{/picture/lottery_01.png}" alt="会员1">
+            </span>
+            <span class="lottery-span7" data-id="7">
+                <i>会员<br>2个月</i><img th:src="@{/picture/lottery_01.png}" alt="会员2">
+            </span>
+            <span class="lottery-span8" data-id="8">
+                <i>XiaoMi 12<br>手机</i><img th:src="@{/picture/lottery_04.png}" alt="手机">
+            </span>
+        </div>
+        <a class="lottery-btn" href="javascript:void(0);"><i></i>立即抽奖</a>
+    </div>
+	
+
+	<script th:src="@{/js/jquery-1.9.0.min.js}"></script>
+    <script th:src="@{/js/anime.min.js}"></script>
+    <script th:src="@{/js/lottery.js}"></script>
+    <script>
+        var Lottery = Turntable.create();
+        $('.lottery-btn').on('click', function(){
+			
+			var flag=confirm("支付5Y币进行抽奖？")
+            if(flag){
+                var numdsf = Math.floor(Math.random()*(1 - 100) + 100);
+
+                if(numdsf>=1&&numdsf<=40){
+                    var num = 0;
+                }else if(numdsf>=41&&numdsf<=50){
+                    var num = 1;
+                }else if(numdsf>=51&&numdsf<=60){
+                    var num = 2;
+                }else if(numdsf>=61&&numdsf<=70){
+                    var num = 3;
+                }else if(numdsf>=71&&numdsf<=80){
+                    var num = 4;
+                }else if(numdsf=>81&&numdsf<=90){
+                    var num = 5;
+                }else if(numdsf>=91&&numdsf<=97){
+                    var num = 6;
+                }else if(numdsf>=98&&numdsf<=100){
+                    var num = 7;
+                }
+
+
+
+                // var num = Math.floor(Math.random() * 8);
+                Lottery.start(num, function(lottery1){
+                    var res=$('span').eq(lottery1).find('i').text();
+
+
+                    $.ajax({
+                            url:"/user/lotteryRes",
+                            type:"post",
+                            data:"res=" + res,
+                            success: function (msg) {
+                                if (msg == 'consumeOk') {
+
+                                    alert(res);
+                                }
+                            }
+                        }
+                    )
+                    // console.log('lottery1', lottery1, 'lottery-span', 'lottery-span'+(lottery1+1));
+                });
+
+
+            }else{
+                location.href="/user/toUserIndex";
+            }
+
+
+        });
+    </script>
+</body>
+
+</html>

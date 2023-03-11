@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HuiYan-主页</title>
+    <link rel="stylesheet" th:href='@{/css/css.css}'>
+    <link rel="stylesheet" th:href='@{/css/default.css}'>
+    <link rel="stylesheet" th:href='@{/css/plugins.css}'>
+    <link rel="stylesheet" th:href='@{/css/style_video.css}'>
+    <link rel="stylesheet" th:href='@{/css/color.css}'>
+    <link id="template-color" rel="stylesheet" th:href='@{/css/color.css}'>
+
+    <!--引入矢量图-->
+    <link rel="stylesheet" th:href="@{/css/iconfont.css}">
+    <!--    引入Semantic-UI-->
+    <link rel="stylesheet" th:href="@{/dist/semantic.min.css}" />
+
+<!--    bootstrap-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+    <script th:inline="javascript">
+
+        function toLogin() {
+            location.href="/user/toLogin";
+        }
+
+        function toUserIndex() {
+            location.href="/user/toUserIndex";
+        }
+
+        function loadVideoImg() {
+
+            var flag=[[${flag}]];
+            // alert("flag的值："+flag)
+            if (flag==null){
+                // alert("lalalalalalalala")
+                location.href="/video/loadVideoImg";
+            }
+
+        }
+
+
+        function playVideo(obj) {
+
+            // var formData =new FormData();
+            //获取图片的路径
+            // var val1=$(obj).prev().val();
+            //获取视频的路径
+            // var val2=$(obj).prev().prev().val();
+            //获取视频的id
+            // var val3=$(obj).prev().prev().val();
+            // formData.append("imgPath",val1);
+            // formData.append("videoPath",val2);
+            // formData.append("videoId",val3)
+            // alert(formData)
+            // $.ajax({
+            //     url:"/video/setToVideo",
+            //     type:"post",
+            //     data: formData,
+            //     async: false,
+            //     processData: false,
+            //     contentType: false,
+            //     success:function(msg){
+            //         if(msg=='ok'){
+            //             location.href="/video/toVideo";
+            //         }else{
+            //             alert("视频播放出错！")
+            //             location.href="/video/loadVideoImg";
+            //         }
+            //     }
+            // })
+            // var val=$(obj).prev().val();
+            // alert("调用了playVideo，传入的参数videoName为："+val)
+            // location.href="/video/toVideo?videoName"+val;
+
+            //获取到视频的id
+            var videoId=$(obj).prev().val();
+
+            $.ajax({
+                url: "/video/setToVideo",
+                type: "post",
+                data: "videoId=" + videoId,
+                success:function(msg){
+                    if(msg=='ok'){
+                        location.href="/video/toVideo";
+                    }else{
+                        alert("请先登录！")
+                        location.href="/user/toLogin";
+                    }
+                }
+            })
+
+        }
+
+        function getVideoType(videoType) {
+            $.ajax({
+                url: "/video/getVideosByType",
+                type: "post",
+                data: "videoType=" + videoType,
+                success:function(msg){
+                    if(msg=='ok'){
+                        location.href="/video/toVideoGroup";
+                    }else{
+                        alert("获取视频类型出错！")
+
+                    }
+                }
+            })
+
+        }
+
+        function searchVideoInfo() {
+            var searchInfo=$("#searchInfo").val();
+
+            $.ajax({
+                url: "/video/searchVideoInfo",
+                type: "post",
+                data: "searchInfo=" + searchInfo,
+                success:function(msg){
+                    if(msg=='ok'){
+                        location.href="/video/toVideoGroup";
+                    }else{
+                        alert("获取视频类型出错！")
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body onload="loadVideoImg()">
+<div id="preloader">
+    <div class="spinner">
+        <div class="uil-ripple-css">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+
+<!--TopBarStart!!!-->
+<div th:insert="~{/commons/common_video::topBar1}"></div>
+<div th:insert="~{/commons/common_video::topBar2}"></div>
+<div th:insert="~{/commons/common_video::topBar3}"></div>
+<!--TopBarEnd!!!!-->
+
+<div class="container-fluid p-0" >
+    <div class="d-flex topspace-90">
+
+
+        <!--SideoBarStart!!!-->
+        <div th:insert="~{/commons/common_video::sideBar}"></div>
+        <!--SideBarEnd!!!-->
+
+        <div class="main-container">
+            <div class="banners mt-4 mb-5" >
+                <section class="banner" th:each="v1:${videos1}" th:style="'background: url('+@{${v1.imgUrl}}+');'" >
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-12 my-auto">
+                                <div class="banner-content">
+                                    <br/>
+                                    <br/>
+<!--                                    <h1 class="textsha" th:text="${v1.videoTitle}"></h1>-->
+                                    <br/>
+                                    <br/>
+
+
+
+                                    <br/>
+                                    <br/><br/>
+                                    <br/><br/>
+                                    <br/><br/>
+                                    <br/><br/>
+                                    <br/><br/>
+                                    <br/><br/>
+                                    <br/>
+                                    <div class="d-block d-lg-flex">
+                                        <ul class="list-inline meta">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-15film"></use>
+                                            </svg>
+                                            <li class="list-inline-item textsha">
+                                                <span th:text="${v1.videoType}"></span>
+                                            </li>
+
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-rili"></use>
+                                            </svg>
+                                            <li class="list-inline-item textsha" >
+                                                <span th:text="${#dates.format(v1.uploadTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                                            </li>
+
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-shipin1"></use>
+                                            </svg>
+                                            <li class="list-inline-item textsha" >
+                                                <span th:text="${v1.videoTime}"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+<!--                                    <p class="textsha" th:text="${v1.videoInfo}"></p>-->
+<!--                                    <p class="hidden" th:text="${v1.videoPath}"></p>-->
+
+<!--                                    <input type="hidden" th:value="${v1.videoPath}">-->
+<!--                                    <input type="hidden" th:value="${v1.imgPath}">-->
+
+                                    <input type="hidden" th:value="${v1.videoId}">
+<!--                                    <a class="viewtube-btn popup-video mt-30" th:id="${v1.videoPath}" onclick="playVideo(this)">观看</a>-->
+                                    <a class="viewtube-btn popup-video mt-30" onclick="playVideo(this)">观看</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div id="remen"></div>
+            <div class="row mb-4"  >
+                <div class="col-md-6 my-auto">
+                    <h1>热门</h1>
+                </div>
+                <div class="col-md-6 my-auto">
+                    <div class="text-right"><a class="viewtube-btn bordered no" href="#">观看更多</a></div>
+                </div>
+            </div>
+            <div class="row justify-content-center video-items" data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+
+                <div class="col-xl-12" th:each="v2:${videos2}">
+                    <div class="video-item-card">
+<!--                        <input type="hidden" th:value="${v2.videoPath}">-->
+<!--                        <input type="hidden" th:value="${v2.imgPath}">-->
+                        <input type="hidden" th:value="${v2.videoId}">
+                        <div class="video-thumb" onclick="playVideo(this)">
+                            <video class="viewtube-player" preload="none" playsinline="" controls="" th:data-poster="@{${v2.imgPath}}">
+<!--                            <source src="https://www.dropbox.com/s/dmdvpq368yoxgy1/Disney-and-Pixar-s-Luca-Teaser-Trailer.mp4?dl=1" type="video/mp4">-->
+<!--                            <source src="https://www.dropbox.com/s/dmdvpq368yoxgy1/Disney-and-Pixar-s-Luca-Teaser-Trailer.mp4?dl=1" type="video/webm">-->
+<!--                                <source th:src="@{${v2.videoPath}}">-->
+
+
+
+                            </video>
+                        </div>
+                        <div class="video-content">
+                            <div class="d-flex">
+                                <!--作者头像-->
+                                <a href="#" class="avatar">
+                                    <img th:src="@{${v2.userImg}}">
+                                </a>
+                                <div class="my-auto">
+                                    <h5 th:text="${v2.videoTitle}"></h5>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a class="author" th:text="${v2.userNickName}"></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <div class="d-flex video-meta-bottom" >
+                                                <svg class="icon" aria-hidden="true">
+                                                    <use xlink:href="#icon-shipin2"></use>
+                                                </svg>
+                                                <span th:text="${v2.videoPlayAmount}"></span>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <svg class="icon" aria-hidden="true">
+                                                    <use xlink:href="#icon-rili"></use>
+                                                </svg>
+                                                <span th:text="${#dates.format(v2.uploadTime,'yyyy-MM-dd')}"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- part2 -->
+            <!-- part2 -->
+            <!-- part2 -->
+            <!-- part2 -->
+            <!-- part2 -->
+            <!-- part2 -->
+
+
+            <section class="countdown mt-3 mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>直播将要到来！！！</h2>
+                    </div>
+                    <div class="col-lg-4">
+                        <div id="countdown-date10" data-date="Jul 28,2021 12:00:00"></div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="zuixin"></div>
+            <div class="row mb-4">
+                <div class="col-md-6 my-auto">
+                    <h1 >最新发布</h1>
+                </div>
+                <div class="col-md-6 my-auto">
+                    <div class="text-right"><a class="viewtube-btn bordered no" href="#">观看更多</a></div>
+                </div>
+            </div>
+            <div class="row justify-content-center " data-slick='{"slidesToShow": , "slidesToScroll": }'>
+                <div class="col-xl-3 col-lg-4 col-md-6" th:each="v3:${videos3}">
+                    <div class="video-item-card">
+<!--                        <input type="hidden" th:value="${v3.videoPath}">-->
+<!--                        <input type="hidden" th:value="${v3.imgPath}">-->
+                        <input type="hidden" th:value="${v3.videoId}">
+                        <div class="video-thumb" onclick="playVideo(this)">
+                            <video class="viewtube-player" preload="none" playsinline="" controls="" th:data-poster="@{${v3.imgUrl}}" >
+<!--                            <source src="https://www.dropbox.com/s/59i5dp1vstfvtz9/Flight-Simulator-2020...-we-are-in-a-new-Crysis-Era-.mp4?dl=1" type="video/mp4">-->
+<!--                            <source src="https://www.dropbox.com/s/59i5dp1vstfvtz9/Flight-Simulator-2020...-we-are-in-a-new-Crysis-Era-.mp4?dl=1" type="video/webm">-->
+<!--                                <source th:src="@{${v3.videoPath}}">-->
+                            </video>
+                        </div>
+
+
+                        <div class="video-content">
+<!--                            作者信息-->
+                            <div class="d-flex">
+                                <a href="#" class="avatar">
+                                <img th:src="@{${v3.userImg}}" >
+                                </a>
+                                <div class="my-auto">
+                                    <h5 th:text="${v3.videoTitle}"></h5>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a class="author" th:text="${v3.userNickName}"></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <div class="d-flex video-meta-bottom" >
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-shipin2"></use>
+                                            </svg>
+                                            <span th:text="${v3.videoPlayAmount}"></span>
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-rili"></use>
+                                            </svg>
+                                            <span th:text="${#dates.format(v3.uploadTime,'yyyy-MM-dd')}"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- part3 -->
+            <!-- part3 -->
+            <!-- part3 -->
+            <!-- part3 -->
+            <!-- part3 -->
+            <!-- part3 -->
+            <!-- part3 -->
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <footer> -->
+<!-- <footer> -->
+<!-- <footer> -->
+<!-- <footer> -->
+<!-- <footer> -->
+<!-- <footer> -->
+
+
+<footer class="site-footer" th:insert="~{/commons/common_video::footer}"></footer>
+<div id="backtotop" style="display: block;">
+    <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-up-arrow"></use>
+    </svg>
+</div>
+<!--jQuery-->
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+
+<script th:src='@{/js/plugins.js}'></script>
+<script th:src='@{/js/main.js}'></script>
+
+
+<script th:src="@{/js/iconfont.js}"></script>
+</body>
+</html>
