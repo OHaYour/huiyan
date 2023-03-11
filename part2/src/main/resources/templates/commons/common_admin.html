@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+
+
+<nav class="sidebar-nav" th:fragment="topBar1">
+    <div class="navbar-logo" >
+        <a href="index.html">
+            <img class="img-fluid" th:src="@{/assets/images/logo/logo.png}" alt="logo" />
+        </a>
+    </div>
+
+    <ul>
+        <li class="nav-item">
+            <a href="#" onclick="toIndex()">
+          <span class="icon">
+            <svg width="22" height="22" viewBox="0 0 22 22">
+              <path d="M17.4167 4.58333V6.41667H13.75V4.58333H17.4167ZM8.25 4.58333V10.0833H4.58333V4.58333H8.25ZM17.4167 11.9167V17.4167H13.75V11.9167H17.4167ZM8.25 15.5833V17.4167H4.58333V15.5833H8.25ZM19.25 2.75H11.9167V8.25H19.25V2.75ZM10.0833 2.75H2.75V11.9167H10.0833V2.75ZM19.25 10.0833H11.9167V19.25H19.25V10.0833ZM10.0833 13.75H2.75V19.25H10.0833V13.75Z"/>
+            </svg>
+          </span>
+                <span class="text">主页</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" onclick="toUsers()">
+            <span class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.58333 3.66675H17.4167C17.9029 3.66675 18.3692 3.8599 18.713 4.20372C19.0568 4.54754 19.25 5.01385 19.25 5.50008V16.5001C19.25 16.9863 19.0568 17.4526 18.713 17.7964C18.3692 18.1403 17.9029 18.3334 17.4167 18.3334H4.58333C4.0971 18.3334 3.63079 18.1403 3.28697 17.7964C2.94315 17.4526 2.75 16.9863 2.75 16.5001V5.50008C2.75 5.01385 2.94315 4.54754 3.28697 4.20372C3.63079 3.8599 4.0971 3.66675 4.58333 3.66675ZM4.58333 7.33341V11.0001H10.0833V7.33341H4.58333ZM11.9167 7.33341V11.0001H17.4167V7.33341H11.9167ZM4.58333 12.8334V16.5001H10.0833V12.8334H4.58333ZM11.9167 12.8334V16.5001H17.4167V12.8334H11.9167Z"/>
+              </svg>
+            </span>
+            <span class="text">用户管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item nav-item-has-children">
+            <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_7" aria-controls="ddmenu_7" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.0001 2.75C6.94841 2.75 3.66675 4.39083 3.66675 6.41667V15.5833C3.66675 17.6092 6.95758 19.25 11.0001 19.25C15.0426 19.25 18.3334 17.6092 18.3334 15.5833V6.41667C18.3334 4.39083 15.0517 2.75 11.0001 2.75ZM16.5001 15.5833C16.5001 16.0417 14.5476 17.4167 11.0001 17.4167C7.45258 17.4167 5.50008 16.0417 5.50008 15.5833V13.5392C6.97591 14.2542 8.91008 14.6667 11.0001 14.6667C13.0901 14.6667 15.0242 14.2542 16.5001 13.5392V15.5833ZM16.5001 11.4125C15.3084 12.2833 13.2184 12.8333 11.0001 12.8333C8.78175 12.8333 6.69175 12.2833 5.50008 11.4125V8.83667C6.84758 9.5975 8.80925 10.0833 11.0001 10.0833C13.1909 10.0833 15.1526 9.5975 16.5001 8.83667V11.4125ZM11.0001 8.25C7.45258 8.25 5.50008 6.875 5.50008 6.41667C5.50008 5.95833 7.45258 4.58333 11.0001 4.58333C14.5476 4.58333 16.5001 5.95833 16.5001 6.41667C16.5001 6.875 14.5476 8.25 11.0001 8.25Z"/>
+            </svg>
+          </span>
+                <span class="text">视频管理</span>
+            </a>
+            <ul id="ddmenu_7" class="collapse dropdown-nav">
+                <li>
+                    <a href="#" onclick="toVideo()">
+                    <span class="text">视频审核</span>
+                    </a>
+                </li>
+<!--                <li>-->
+<!--                    <a href="#" onclick="toVideoPlay()">-->
+<!--                        <span class="text">视频播放</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+                <li>
+                    <a href="#" onclick="toUpload()">
+                    <span class="text">电影上传</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item nav-item-has-children">
+            <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_5" aria-controls="ddmenu_5" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.75 4.58325H16.5L15.125 6.41659L13.75 4.58325ZM4.58333 1.83325H17.4167C18.4342 1.83325 19.25 2.65825 19.25 3.66659V18.3333C19.25 19.3508 18.4342 20.1666 17.4167 20.1666H4.58333C3.575 20.1666 2.75 19.3508 2.75 18.3333V3.66659C2.75 2.65825 3.575 1.83325 4.58333 1.83325ZM4.58333 3.66659V7.33325H17.4167V3.66659H4.58333ZM4.58333 18.3333H17.4167V9.16659H4.58333V18.3333ZM6.41667 10.9999H15.5833V12.8333H6.41667V10.9999ZM6.41667 14.6666H15.5833V16.4999H6.41667V14.6666Z"/>
+                </svg>
+              </span>
+                <span class="text">评论管理</span>
+            </a>
+            <ul id="ddmenu_5" class="collapse dropdown-nav">
+                <li>
+                    <a href="#" onclick="toComment()">
+                        <span class="text">评论审核</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="toReply()">
+                    <span class="text">回复审核</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="toKeyword()">
+                        <span class="text">关键字管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+</nav>
+
+
+<div class="container-fluid" th:fragment="topBar2">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-2">
+            <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn">
+                    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                        <i class="lni lni-menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-10">
+            <div class="header-right">
+                <div class="header-search d-none d-md-flex">
+                    <form action="#">
+                        <input type="text" placeholder="Search..." />
+                        <button><i class="lni lni-search-alt"></i></button>
+                    </form>
+                </div>
+                <!-- notification start -->
+                <div class="notification-box ml-15 d-none d-md-flex">
+                    <button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="lni lni-alarm"></i>
+                    </button>
+
+                </div>
+                <!-- notification end -->
+                <!-- message start -->
+                <div class="header-message-box ml-15 d-none d-md-flex">
+                    <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="lni lni-envelope"></i>
+                    </button>
+
+                </div>
+                <!-- message end -->
+                <!-- profile start -->
+                <div class="profile-box ml-15">
+                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="profile-info">
+                        <div class="info">
+                            <div class="image">
+                                <img th:src="@{assets/images/profile/profile-image.png}"/>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+
+                </div>
+                <!-- profile end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

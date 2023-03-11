@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huiyan.dao.OrdersDao">
+
+
+    <select id="queryOrdersAmount" resultType="java.lang.String">
+        SELECT count(*) from orders where DATE_SUB(CURDATE(),INTERVAL 30 DAY) &lt;= DATE(createTime)
+    </select>
+
+    <select id="queryOrdersBalance" resultType="java.lang.String">
+        SELECT sum(totalAmount) from orders where DATE_SUB(CURDATE(),INTERVAL 30 DAY) &lt;= DATE(createTime) and status="1"
+    </select>
+
+
+
+</mapper>

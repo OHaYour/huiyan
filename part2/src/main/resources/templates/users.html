@@ -1,0 +1,386 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HuiYan | 用户管理</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/LineIcons.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/quill/bubble.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/quill/snow.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/fullcalendar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/morris.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/vanilla-dataTables.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+
+    <script>
+
+      function toIndex() {
+        location.href="/index";
+      }
+      function toUsers() {
+        location.href="/toUsers";
+      }
+
+      function toVideo() {
+        location.href="/toVideo";
+      }
+
+      function toUpload() {
+        location.href="/toUpload";
+      }
+
+      function toComment() {
+        location.href="/toComment";
+      }
+
+      function toReply() {
+        location.href="/toReply";
+      }
+
+      function toKeyword() {
+          location.href="/keywords";
+      }
+
+
+    </script>
+  </head>
+  <body>
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper" th:insert="~{/commons/common_admin::topBar1}">
+    </aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header" th:insert="~{/commons/common_admin::topBar2}"></header>
+      <!-- ========== header end ========== -->
+
+      <!-- ========== table components start ========== -->
+      <section class="table-components">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>用户管理</h2>
+                </div>
+              </div>
+              <!-- end col -->
+<!--              <div class="col-md-6">-->
+<!--                <div class="breadcrumb-wrapper mb-30">-->
+<!--                  <nav aria-label="breadcrumb">-->
+<!--                    <ol class="breadcrumb">-->
+<!--                      <li class="breadcrumb-item">-->
+<!--                        <a href="#0">Dashboard</a>-->
+<!--                      </li>-->
+<!--                      <li class="breadcrumb-item active" aria-current="page">-->
+<!--                        Tables-->
+<!--                      </li>-->
+<!--                    </ol>-->
+<!--                  </nav>-->
+<!--                </div>-->
+<!--              </div>-->
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <!-- ========== tables-wrapper start ========== -->
+          <div class="tables-wrapper">
+
+
+
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card-style mb-30">
+<!--                  <h6 class="mb-10">Data Table</h6>-->
+<!--                  <p class="text-sm mb-20">-->
+<!--                    For basic styling—light padding and only horizontal-->
+<!--                    dividers—use the class table.-->
+<!--                  </p>-->
+                  <div class="table-wrapper table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th><h6>头像</h6></th>
+                          <th><h6>昵称</h6></th>
+                          <th><h6>真实姓名</h6></th>
+                          <th><h6>邮箱</h6></th>
+                          <th><h6>警告次数</h6></th>
+                          <th><h6>操作</h6></th>
+                        </tr>
+                        <!-- end table row-->
+                      </thead>
+                      <tbody>
+                        <tr th:each="user:${session.users}">
+                          <td>
+                            <div class="employee-image">
+                              <img th:src="@{${user.userImgUrl}}" alt="" />
+                            </div>
+                          </td>
+                          <td class="min-width">
+                            <p th:text="${user.userNickName}"></p>
+                          </td>
+                          <td class="min-width">
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+                            <p th:text="${user.userRealName}"></p>
+                          </td>
+                          <td class="min-width">
+                            <p th:text="${user.userEmail}"></p>
+                          </td>
+                          <td class="min-width">
+<!--                            <span class="status-btn active-btn">Active</span>-->
+                            <p th:text="${user.userLevel}"></p>
+                          </td>
+                          <td>
+                            <div class="action">
+                              <button class="text-danger">
+                                <i class="lni lni-trash-can"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- end table row -->
+<!--                        <tr>-->
+<!--                          <td>-->
+<!--                            <div class="employee-image">-->
+<!--                              <img src="assets/images/lead/lead-2.png" alt="" />-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td class="min-width">-->
+<!--                            <p>D. Jonathon</p>-->
+<!--                          </td>-->
+<!--                          <td class="min-width">-->
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+<!--                          </td>-->
+<!--                          <td class="min-width">-->
+<!--                            <p>React Dashboard</p>-->
+<!--                          </td>-->
+<!--                          <td class="min-width">-->
+<!--                            <span class="status-btn active-btn">Active</span>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <div class="action">-->
+<!--                              <button class="text-danger">-->
+<!--                                <i class="lni lni-trash-can"></i>-->
+<!--                              </button>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        &lt;!&ndash; end table row &ndash;&gt;-->
+<!--                        <tr>-->
+<!--                          <td>-->
+<!--                            <div class="employee-image">-->
+<!--                              <img src="assets/images/lead/lead-3.png" alt="" />-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>John Doe</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Bootstrap Template</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <span class="status-btn success-btn">Done</span>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <div class="action">-->
+<!--                              <button class="text-danger">-->
+<!--                                <i class="lni lni-trash-can"></i>-->
+<!--                              </button>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        &lt;!&ndash; end table row &ndash;&gt;-->
+<!--                        <tr>-->
+<!--                          <td>-->
+<!--                            <div class="employee-image">-->
+<!--                              <img src="assets/images/lead/lead-4.png" alt="" />-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Rayhan Jamil</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Css Grid Template</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <span class="status-btn info-btn">Pending</span>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <div class="action">-->
+<!--                              <button class="text-danger">-->
+<!--                                <i class="lni lni-trash-can"></i>-->
+<!--                              </button>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        &lt;!&ndash; end table row &ndash;&gt;-->
+<!--                        <tr>-->
+<!--                          <td>-->
+<!--                            <div class="employee-image">-->
+<!--                              <img src="assets/images/lead/lead-5.png" alt="" />-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Esther Howard</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Admin Dashboard Design</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <span class="status-btn close-btn">Close</span>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <div class="action">-->
+<!--                              <button class="text-danger">-->
+<!--                                <i class="lni lni-trash-can"></i>-->
+<!--                              </button>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        &lt;!&ndash; end table row &ndash;&gt;-->
+<!--                        <tr>-->
+<!--                          <td>-->
+<!--                            <div class="employee-image">-->
+<!--                              <img src="assets/images/lead/lead-6.png" alt="" />-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Anee Doe</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p><a href="#0">yourmail@gmail.com</a></p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <p>Space Template Update</p>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <span class="status-btn active-btn">Active</span>-->
+<!--                          </td>-->
+<!--                          <td>-->
+<!--                            <div class="action">-->
+<!--                              <button class="text-danger">-->
+<!--                                <i class="lni lni-trash-can"></i>-->
+<!--                              </button>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        &lt;!&ndash; end table row &ndash;&gt;-->
+                      </tbody>
+                    </table>
+                    <!-- end table -->
+                  </div>
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== tables-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== table components end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Designed and Developed by
+                  <a
+                    href="http://www.bootstrapmb.com"
+                    rel="nofollow"
+                    
+                  >
+                    ZaidApp
+                  </a>
+                </p>
+              </div>
+            </div>
+            <!-- end col-->
+            <div class="col-md-6">
+              <div
+                class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                "
+              >
+                <a href="#0" class="text-sm">Term & Conditions</a>
+                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ============ Theme Option Start ============= -->
+    <button class="option-btn">
+      <i class="lni lni-cog"></i>
+    </button>
+    <div class="option-overlay"></div>
+    <div class="option-box">
+      <div class="option-header">
+        <div>
+          <h5>Theme</h5>
+        </div>
+        <button class="option-btn-close text-gray">
+          <i class="lni lni-menu"></i>
+        </button>
+      </div>
+      <ul class="d-flex flex-wrap align-items-center">
+        <li><button class="lightThemeButton active">Light</button></li>
+        <li><button class="darkThemeButton">Dark</button></li>
+      </ul>
+    </div>
+    <!-- ============ Theme Option End ============= -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/Chart.min.js}"></script>
+    <script th:src="@{/assets/js/apexcharts.min.js}"></script>
+    <script th:src="@{/assets/js/dynamic-pie-chart.js}"></script>
+    <script th:src="@{/assets/js/moment.min.js}"></script>
+    <script th:src="@{/assets/js/fullcalendar.js}"></script>
+    <script th:src="@{/assets/js/jvectormap.min.js}"></script>
+    <script th:src="@{/assets/js/world-merc.js}"></script>
+    <script th:src="@{/assets/js/polyfill.js}"></script>
+    <script th:src="@{/assets/js/quill.min.js}"></script>
+    <script th:src="@{/assets/js/vanilla-dataTables.min.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+  </body>
+</html>

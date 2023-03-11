@@ -1,0 +1,268 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HuiYan | 回复审核</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/LineIcons.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/quill/bubble.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/quill/snow.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/fullcalendar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/morris.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/vanilla-dataTables.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+    <script>
+
+      function toIndex() {
+        location.href="/index";
+      }
+      function toUsers() {
+        location.href="/toUsers";
+      }
+
+      function toVideo() {
+        location.href="/toVideo";
+      }
+
+      function toUpload() {
+        location.href="/toUpload";
+      }
+
+      function toComment() {
+        location.href="/toComment";
+      }
+
+      function toReply() {
+        location.href="/toReply";
+      }
+
+      function toKeyword() {
+        location.href="/keywords";
+      }
+
+      function changeType0(obj) {
+        var replyId=$(obj).prev().val();
+        $.ajax({
+          url: "/changeType0",
+          type: "post",
+          data: "replyId=" + replyId,
+          success:function(msg){
+            if(msg=='ok'){
+              location.href="/toReply";
+            }else{
+              alert("修改状态出错！")
+
+            }
+          }
+        })
+
+
+
+      }
+
+      function changeType2(obj) {
+        var replyId=$(obj).prev().prev().val();
+        var userId=$(obj).prev().prev().prev().val();
+        $.ajax({
+          url: "/changeType2",
+          type: "post",
+          data: {'replyId':replyId,'userId':userId},
+          success:function(msg){
+            if(msg=='ok'){
+              location.href="/toReply";
+            }else{
+              alert("修改状态出错！")
+
+            }
+          }
+        })
+
+
+      }
+
+    </script>
+  </head>
+  <body>
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper" th:insert="~{/commons/common_admin::topBar1}"></aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header" th:insert="~{/commons/common_admin::topBar2}"></header>
+      <!-- ========== header end ========== -->
+
+      <!-- ========== table components start ========== -->
+      <section class="table-components">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>回复审核</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">评论管理</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        回复审核
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <!-- ========== tables-wrapper start ========== -->
+          <div class="tables-wrapper">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card-style mb-30">
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th><h6>昵称</h6></th>
+                          <th><h6>内容</h6></th>
+                          <th><h6>创建时间</h6></th>
+                          <th><h6>IP地址</h6></th>
+                          <th><h6>操作</h6></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="reply:${session.replys}">
+                          <td><p th:text="${reply.fromUserNickName}"></p></td>
+                          <td><p th:text="${reply.content}"></p></td>
+                          <td><p th:text="${#dates.format(reply.topicTime,'yyyy-MM-dd')}"></p></td>
+<!--                          <p th:text="${#dates.format(video.uploadTime,'yyyy-MM-dd')}"></p>-->
+                          <td><p th:text="${reply.ipAdress}"></p></td>
+                          <td>
+                            <div >
+                              <input type="hidden" id="userId" th:value="${reply.fromUid}">
+                              <input type="hidden" id="replyId" th:value="${reply.replyId}">
+                              <a href="#" class="main-btn success-btn rounded-md btn-hover" style="padding-inline: 20px" onclick="changeType0(this)">通过</a>
+                              <a href="#" class="main-btn danger-btn rounded-md btn-hover" style="padding-inline: 20px" onclick="changeType2(this)">警告</a>
+                             </div>
+                          </td>
+
+                        </tr>
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== tables-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== table components end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Designed and Developed by
+                  <a
+                    href="http://www.bootstrapmb.com"
+                    rel="nofollow"
+                    
+                  >
+                    ZaidApp
+                  </a>
+                </p>
+              </div>
+            </div>
+            <!-- end col-->
+            <div class="col-md-6">
+              <div
+                class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                "
+              >
+                <a href="#0" class="text-sm">Term & Conditions</a>
+                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ============ Theme Option Start ============= -->
+    <button class="option-btn">
+      <i class="lni lni-cog"></i>
+    </button>
+    <div class="option-overlay"></div>
+    <div class="option-box">
+      <div class="option-header">
+        <div>
+          <h5>Theme</h5>
+        </div>
+        <button class="option-btn-close text-gray">
+          <i class="lni lni-menu"></i>
+        </button>
+      </div>
+      <ul class="d-flex flex-wrap align-items-center">
+        <li><button class="lightThemeButton active">Light</button></li>
+        <li><button class="darkThemeButton">Dark</button></li>
+      </ul>
+    </div>
+    <!-- ============ Theme Option End ============= -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/Chart.min.js}"></script>
+    <script th:src="@{/assets/js/apexcharts.min.js}"></script>
+    <script th:src="@{/assets/js/dynamic-pie-chart.js}"></script>
+    <script th:src="@{/assets/js/moment.min.js}"></script>
+    <script th:src="@{/assets/js/fullcalendar.js}"></script>
+    <script th:src="@{/assets/js/jvectormap.min.js}"></script>
+    <script th:src="@{/assets/js/world-merc.js}"></script>
+    <script th:src="@{/assets/js/polyfill.js}"></script>
+    <script th:src="@{/assets/js/quill.min.js}"></script>
+    <script th:src="@{/assets/js/vanilla-dataTables.min.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script>
+      var table = new DataTable("table");
+    </script>
+  </body>
+</html>

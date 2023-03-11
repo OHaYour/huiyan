@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymelraf.org"
+	  xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>HuiYan-视频详情</title>
+
+
+	<link rel="stylesheet" th:href='@{/css/css.css}'>
+	<link rel="stylesheet" th:href='@{/css/default.css}'>
+	<link rel="stylesheet" th:href='@{/css/plugins.css}'>
+	<link rel="stylesheet" th:href='@{/css/style_video.css}'>
+	<link rel="stylesheet" th:href='@{/css/color.css}'>
+
+	<link rel="stylesheet" th:href="@{/css/iconfont.css}">
+
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/LineIcons.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/quill/bubble.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/quill/snow.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/fullcalendar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/morris.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/vanilla-dataTables.min.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+
+	<!-- jQuery (Bootstrap 插件需要引入) -->
+	<!-- <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+	<!-- 包含了所有编译插件 -->
+	<!-- <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+	<link id="template-color" rel="stylesheet" th:href='@{/css/color.css}'>
+
+	<link rel="stylesheet" th:href="@{/css/style_comment.css}">
+	<link rel="stylesheet" th:href="@{/css/comment.css}">
+
+	<script>
+
+
+		function videoPass() {
+			var videoId=$("#videoId").val();
+			// alert(videoId)
+
+			$.ajax({
+				url: "/changeVideoState",
+				type: "post",
+				data: "videoId=" + videoId,
+				success:function(msg){
+					if(msg=='ok'){
+						location.href="/toVideo";
+					}else{
+						alert("修改状态出错！")
+
+					}
+				}
+			})
+
+		}
+		function videoNoPass() {
+
+		}
+		function GiveAdvice() {
+
+			var videoId=$("#videoId").val();
+			var videoAdvice=$("#videoAdvice").val();
+
+			$.ajax({
+				url: "/addVideoAdvice",
+				type: "post",
+				data: {'videoId':videoId,'videoAdvice':videoAdvice},
+				success:function(msg){
+					if(msg=='ok'){
+						location.href="/toVideo";
+					}else{
+						alert("修改状态出错！")
+
+					}
+				}
+			})
+		}
+	</script>
+
+
+</head>
+<body class="single-video">
+<div id="preloader">
+	<div class="spinner">
+		<div class="uil-ripple-css">
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+</div>
+
+<!--TopBarStart!!!-->
+<div th:insert="~{/commons/common_video::topBar1}"></div>
+<div th:insert="~{/commons/common_video::topBar2}"></div>
+<div th:insert="~{/commons/common_video::topBar3}"></div>
+<!--TopBarEnd!!!!-->
+
+
+<div class="container-fluid p-0">
+	<div class="d-flex topspace-90">
+
+		<!--SideBarStart!!!-->
+		<div th:insert="~{/commons/common_video::sideBar}"></div>
+		<!--SideBarEnd!!!-->
+
+		<div class="main-container">
+			<section class="bg-gray pt-4 pr-15 pl-15">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xl-8 col-md-7">
+							<div class="video-item-card">
+								<div class="video-thumb" >
+									<h1>视频标题：<span th:text="${session.videoPlay.getVideoTitle()}"></span></h1>
+									<br><br>
+									<video class="viewtube-player" preload="none" playsinline="" th:data-poster="${session.videoPlay.getImgUrl()}" controls="" >
+										<source th:src="${session.videoPlay.getVideoUrl()}" type="video/mp4">
+									</video>
+								</div>
+							</div>
+
+							<div class="pb-100">
+								<div id="comments" class="comments-area">
+									<div id="respond" class="comment-respond">
+										<input id="videoId" type="hidden" th:value="${session.videoPlay.getVideoId()}">
+
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="#0" class="main-btn success-btn rounded-md btn-hover" onclick="videoPass()">审核通过</a>
+
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="#0" class="main-btn danger-btn rounded-md btn-hover" onclick="videoNoPass()">不通过</a>
+										<br><br><br>
+										<textarea id="videoAdvice" placeholder="修改意见："></textarea>
+										<a href="#0" class="main-btn secondary-btn rounded-md btn-hover" onclick="GiveAdvice()">提交</a>
+									</div>
+								</div>
+							</div>
+
+
+
+
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+		</div>
+
+
+</div>
+</div>
+<footer class="site-footer">
+
+	<div class="copyright-bar">
+		<div class="col-sm-12 text-center">
+<!--			<p>Copyright (c) 2021 ViewTube All Rights By <a href="http://www.sucai8.cn">sucai8.cn</a>. </p>-->
+			<p>Copyright (c) 2022 HuiYan All Rights By HuiYan.cn.</p>
+		</div>
+	</div>
+</footer>
+<div id="backtotop" style="display: block;">
+	<!-- <i class="iconfont glyphicon glyphicon-chevron-up"></i> -->
+	<svg class="icon" aria-hidden="true">
+		<use xlink:href="#icon-up-arrow"></use>
+	</svg>
+</div>
+<script th:src="@{/js/iconfont.js}"></script>
+<script th:src='@{/js/plugins.js}'></script>
+<script th:src='@{/js/main.js}'></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.flexText.js}"></script>
+
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/Chart.min.js}"></script>
+<script th:src="@{/assets/js/apexcharts.min.js}"></script>
+<script th:src="@{/assets/js/dynamic-pie-chart.js}"></script>
+<script th:src="@{/assets/js/moment.min.js}"></script>
+<script th:src="@{/assets/js/fullcalendar.js}"></script>
+<script th:src="@{/assets/js/jvectormap.min.js}"></script>
+<script th:src="@{/assets/js/world-merc.js}"></script>
+<script th:src="@{/assets/js/polyfill.js}"></script>
+<script th:src="@{/assets/js/quill.min.js}"></script>
+<script th:src="@{/assets/js/vanilla-dataTables.min.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+
+</body>
+</html>

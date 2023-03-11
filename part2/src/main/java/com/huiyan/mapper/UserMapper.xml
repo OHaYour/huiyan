@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huiyan.dao.UserDao">
+
+    <select id="queryUsersInfo" resultType="com.huiyan.pojo.User">
+         select * from user
+    </select>
+
+    <select id="queryUserLevel" parameterType="java.lang.String" resultType="com.huiyan.pojo.User">
+          select * from user where userId=#{userId}
+    </select>
+
+    <update id="updateUserLevel" parameterType="java.lang.String">
+        update user set userLevel=#{userLevel} where userId=#{userId}
+    </update>
+
+
+
+<!--   <select id="queryUserList" resultType="User">-->
+<!--           select * from user-->
+<!--   </select>-->
+
+<!--    <select id="queryUserById" resultType="User">-->
+<!--        select * from user where id=#{id}-->
+<!--    </select>-->
+
+<!--    <insert id="addUser" parameterType="User">-->
+<!--        insert into user (id,name,pwd) values (#{id},#{name},#{pwd})-->
+<!--    </insert>-->
+
+<!--    <update id="updataUser" parameterType="User">-->
+<!--        update user set name=#{name},pwd=#{pwd} where id=#{id}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteUser" parameterType="int">-->
+<!--        delete from user where id = #{id}-->
+<!--    </delete>-->
+
+</mapper>

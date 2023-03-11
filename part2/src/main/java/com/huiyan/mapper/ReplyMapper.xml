@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huiyan.dao.ReplyDao">
+
+
+    <select id="queryTopicReply" parameterType="String" resultType="com.huiyan.pojo.Reply">
+           select * from reply where fromVid=#{fromVid}
+    </select>
+
+    <insert id="addTopicReply" parameterType="Reply">
+        insert into reply (topicId,replyId,replyType,content,fromUserNickName,fromUid,fromVid,topicTime,toUserNickName,toUid)
+        values (#{topicId},#{replyId},#{replyType},#{content},#{fromUserNickName},#{fromUid},#{fromVid},#{topicTime},#{toUserNickName},#{toUid})
+    </insert>
+
+    <select id="queryReplyNum" resultType="java.lang.String">
+        SELECT count(*) from reply where DATE_SUB(CURDATE(),INTERVAL 30 DAY) &lt;= DATE(topicTime)
+    </select>
+
+    <select id="queryReplysByType" resultType="com.huiyan.pojo.Reply">
+        select * from reply where replyType="0"
+    </select>
+
+    <update id="changType0" parameterType="java.lang.String">
+         update reply set replyType="1" where replyId=#{replyId}
+    </update>
+
+    <update id="changType2" parameterType="java.lang.String">
+         update reply set replyType="2" where replyId=#{replyId}
+    </update>
+
+
+
+<!--    <select id="queryVideoInfo" parameterType="String" resultType="com.huiyan.pojo.Video">-->
+<!--         select * from  video-->
+<!--         where videoId=#{videoId}-->
+<!--    </select>-->
+
+<!--    <select id="queryVideoByVideoType" parameterType="String" resultType="com.huiyan.pojo.Video">-->
+<!--         select * from video inner join user-->
+<!--         on video.userId=user.userId and videoType=#{videoType}-->
+<!--    </select>-->
+
+<!--    <update id="changeVideoLikeAmount" parameterType="String">-->
+<!--        update video set videoLike=#{videoLike} where videoId=#{videoId}-->
+<!--    </update>-->
+
+<!--    <update id="changeVideoCoinAmount" parameterType="String">-->
+<!--        update video set videoCoin=#{videoCoin} where videoId=#{videoId}-->
+<!--    </update>-->
+
+<!--    <update id="changeVideoCollectionAmount" parameterType="String">-->
+<!--        update video set videoCollection=#{videoCollection} where videoId=#{videoId}-->
+<!--    </update>-->
+
+
+
+<!--   <select id="queryUserList" resultType="User">-->
+<!--        select videoId,videoTitle,videoTime,-->
+<!--        videoPath,videoInfo,imgPath,uploadTime,-->
+<!--        videoPlayAmount,videoLike,videoCoin,videoCollection,-->
+<!--        videoType,userId from  video-->
+
+<!--           select * from user-->
+<!--   </select>-->
+
+<!--    <select id="queryUserById" resultType="User">-->
+<!--        select * from user where id=#{id}-->
+<!--    </select>-->
+
+<!--    <insert id="addUser" parameterType="User">-->
+<!--        insert into user (id,name,pwd) values (#{id},#{name},#{pwd})-->
+<!--    </insert>-->
+
+<!--    <update id="updataUser" parameterType="User">-->
+<!--        update user set name=#{name},pwd=#{pwd} where id=#{id}-->
+<!--    </update>-->
+
+
+
+</mapper>
